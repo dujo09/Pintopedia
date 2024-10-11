@@ -52,5 +52,275 @@
     "rating": 3.9,
     "flavorDescription": "Clean and crisp with a light malt sweetness and a refreshing bitterness from noble hops.",
     "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Golden Ale",
+    "alcoholPercentage": 5.5,
+    "color": "Golden",
+    "averagePrice": "3.50",
+    "rating": 4.2,
+    "flavorDescription": "Crisp and refreshing with a light malt sweetness and subtle hoppy bitterness.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Stouty Delight",
+    "alcoholPercentage": 6.7,
+    "color": "Dark Brown",
+    "averagePrice": "4.00",
+    "rating": 4.5,
+    "flavorDescription": "Rich, creamy body with notes of chocolate, coffee, and roasted malt.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Amber Lager",
+    "alcoholPercentage": 4.8,
+    "color": "Amber",
+    "averagePrice": "3.00",
+    "rating": 4.0,
+    "flavorDescription": "Smooth caramel malt flavor with hints of toffee and a mild hop finish.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Hazy IPA",
+    "alcoholPercentage": 6.2,
+    "color": "Hazy Pale",
+    "averagePrice": "4.50",
+    "rating": 4.6,
+    "flavorDescription": "Juicy and fruity with strong citrus, mango, and pineapple flavors and a soft mouthfeel.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Belgian Tripel",
+    "alcoholPercentage": 8.5,
+    "color": "Pale Gold",
+    "averagePrice": "5.50",
+    "rating": 4.8,
+    "flavorDescription": "Complex with fruity and spicy aromas, a dry finish, and a high alcohol warmth.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Crisp Pilsner",
+    "alcoholPercentage": 4.9,
+    "color": "Light Straw",
+    "averagePrice": "3.25",
+    "rating": 3.9,
+    "flavorDescription": "Clean and crisp with a light malt sweetness and a refreshing bitterness from noble hops.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Golden Ale",
+    "alcoholPercentage": 5.5,
+    "color": "Golden",
+    "averagePrice": "3.50",
+    "rating": 4.2,
+    "flavorDescription": "Crisp and refreshing with a light malt sweetness and subtle hoppy bitterness.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Stouty Delight",
+    "alcoholPercentage": 6.7,
+    "color": "Dark Brown",
+    "averagePrice": "4.00",
+    "rating": 4.5,
+    "flavorDescription": "Rich, creamy body with notes of chocolate, coffee, and roasted malt.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Amber Lager",
+    "alcoholPercentage": 4.8,
+    "color": "Amber",
+    "averagePrice": "3.00",
+    "rating": 4.0,
+    "flavorDescription": "Smooth caramel malt flavor with hints of toffee and a mild hop finish.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Hazy IPA",
+    "alcoholPercentage": 6.2,
+    "color": "Hazy Pale",
+    "averagePrice": "4.50",
+    "rating": 4.6,
+    "flavorDescription": "Juicy and fruity with strong citrus, mango, and pineapple flavors and a soft mouthfeel.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Belgian Tripel",
+    "alcoholPercentage": 8.5,
+    "color": "Pale Gold",
+    "averagePrice": "5.50",
+    "rating": 4.8,
+    "flavorDescription": "Complex with fruity and spicy aromas, a dry finish, and a high alcohol warmth.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Crisp Pilsner",
+    "alcoholPercentage": 4.9,
+    "color": "Light Straw",
+    "averagePrice": "3.25",
+    "rating": 3.9,
+    "flavorDescription": "Clean and crisp with a light malt sweetness and a refreshing bitterness from noble hops.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Golden Ale",
+    "alcoholPercentage": 5.5,
+    "color": "Golden",
+    "averagePrice": "3.50",
+    "rating": 4.2,
+    "flavorDescription": "Crisp and refreshing with a light malt sweetness and subtle hoppy bitterness.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Stouty Delight",
+    "alcoholPercentage": 6.7,
+    "color": "Dark Brown",
+    "averagePrice": "4.00",
+    "rating": 4.5,
+    "flavorDescription": "Rich, creamy body with notes of chocolate, coffee, and roasted malt.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Amber Lager",
+    "alcoholPercentage": 4.8,
+    "color": "Amber",
+    "averagePrice": "3.00",
+    "rating": 4.0,
+    "flavorDescription": "Smooth caramel malt flavor with hints of toffee and a mild hop finish.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Hazy IPA",
+    "alcoholPercentage": 6.2,
+    "color": "Hazy Pale",
+    "averagePrice": "4.50",
+    "rating": 4.6,
+    "flavorDescription": "Juicy and fruity with strong citrus, mango, and pineapple flavors and a soft mouthfeel.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Belgian Tripel",
+    "alcoholPercentage": 8.5,
+    "color": "Pale Gold",
+    "averagePrice": "5.50",
+    "rating": 4.8,
+    "flavorDescription": "Complex with fruity and spicy aromas, a dry finish, and a high alcohol warmth.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Crisp Pilsner",
+    "alcoholPercentage": 4.9,
+    "color": "Light Straw",
+    "averagePrice": "3.25",
+    "rating": 3.9,
+    "flavorDescription": "Clean and crisp with a light malt sweetness and a refreshing bitterness from noble hops.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Golden Ale",
+    "alcoholPercentage": 5.5,
+    "color": "Golden",
+    "averagePrice": "3.50",
+    "rating": 4.2,
+    "flavorDescription": "Crisp and refreshing with a light malt sweetness and subtle hoppy bitterness.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Stouty Delight",
+    "alcoholPercentage": 6.7,
+    "color": "Dark Brown",
+    "averagePrice": "4.00",
+    "rating": 4.5,
+    "flavorDescription": "Rich, creamy body with notes of chocolate, coffee, and roasted malt.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Amber Lager",
+    "alcoholPercentage": 4.8,
+    "color": "Amber",
+    "averagePrice": "3.00",
+    "rating": 4.0,
+    "flavorDescription": "Smooth caramel malt flavor with hints of toffee and a mild hop finish.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Hazy IPA",
+    "alcoholPercentage": 6.2,
+    "color": "Hazy Pale",
+    "averagePrice": "4.50",
+    "rating": 4.6,
+    "flavorDescription": "Juicy and fruity with strong citrus, mango, and pineapple flavors and a soft mouthfeel.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Belgian Tripel",
+    "alcoholPercentage": 8.5,
+    "color": "Pale Gold",
+    "averagePrice": "5.50",
+    "rating": 4.8,
+    "flavorDescription": "Complex with fruity and spicy aromas, a dry finish, and a high alcohol warmth.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Crisp Pilsner",
+    "alcoholPercentage": 4.9,
+    "color": "Light Straw",
+    "averagePrice": "3.25",
+    "rating": 3.9,
+    "flavorDescription": "Clean and crisp with a light malt sweetness and a refreshing bitterness from noble hops.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Golden Ale",
+    "alcoholPercentage": 5.5,
+    "color": "Golden",
+    "averagePrice": "3.50",
+    "rating": 4.2,
+    "flavorDescription": "Crisp and refreshing with a light malt sweetness and subtle hoppy bitterness.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Stouty Delight",
+    "alcoholPercentage": 6.7,
+    "color": "Dark Brown",
+    "averagePrice": "4.00",
+    "rating": 4.5,
+    "flavorDescription": "Rich, creamy body with notes of chocolate, coffee, and roasted malt.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Amber Lager",
+    "alcoholPercentage": 4.8,
+    "color": "Amber",
+    "averagePrice": "3.00",
+    "rating": 4.0,
+    "flavorDescription": "Smooth caramel malt flavor with hints of toffee and a mild hop finish.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Hazy IPA",
+    "alcoholPercentage": 6.2,
+    "color": "Hazy Pale",
+    "averagePrice": "4.50",
+    "rating": 4.6,
+    "flavorDescription": "Juicy and fruity with strong citrus, mango, and pineapple flavors and a soft mouthfeel.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Belgian Tripel",
+    "alcoholPercentage": 8.5,
+    "color": "Pale Gold",
+    "averagePrice": "5.50",
+    "rating": 4.8,
+    "flavorDescription": "Complex with fruity and spicy aromas, a dry finish, and a high alcohol warmth.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
+  },
+  {
+    "name": "Crisp Pilsner",
+    "alcoholPercentage": 4.9,
+    "color": "Light Straw",
+    "averagePrice": "3.25",
+    "rating": 3.9,
+    "flavorDescription": "Clean and crisp with a light malt sweetness and a refreshing bitterness from noble hops.",
+    "manufacturer": "6707ca21de34d8b63fc8319d"
   }
 ]
