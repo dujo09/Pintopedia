@@ -1,0 +1,43 @@
+[
+  {
+    "_id": "6707ca21de34d8b63fc8319d",
+    "name": "Bavarian Brewery",
+    "yearEstablished": 1823,
+    "country": "Germany",
+    "city": "Munich",
+    "description": "One of the oldest breweries in Bavaria, known for traditional lager beers.",
+    "website": "https://www.bavarianbrewery.com"
+  },
+  {
+    "name": "West Coast Brewing Co.",
+    "yearEstablished": 1995,
+    "country": "USA",
+    "city": "San Diego",
+    "description": "Craft brewery specializing in hop-forward IPAs and experimental brews.",
+    "website": "https://www.westcoastbrewco.com"
+  },
+  {
+    "name": "Sapporo Breweries Ltd.",
+    "yearEstablished": 1876,
+    "country": "Japan",
+    "city": "Sapporo",
+    "description": "Japan's oldest brewery, famous for its crisp lagers and international presence.",
+    "website": "https://www.sapporobeer.jp"
+  },
+  {
+    "name": "Trappist Abbey Brewery",
+    "yearEstablished": 1680,
+    "country": "Belgium",
+    "city": "Westvleteren",
+    "description": "A traditional Trappist monastery known for its limited-edition and world-renowned beers.",
+    "website": "https://www.trappistabbeybrewery.be"
+  },
+  {
+    "name": "New Zealand Craft Brewers",
+    "yearEstablished": 2003,
+    "country": "New Zealand",
+    "city": "Auckland",
+    "description": "A modern brewery crafting innovative and eco-friendly beers with local ingredients.",
+    "website": "https://www.nzcraftbrewers.co.nz"
+  }
+]
