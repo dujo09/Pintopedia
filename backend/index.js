@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(logMiddleware);
-app.use(`/beers`, beerRouter);
+app.use(`${BASE_URL}beers`, beerRouter);
 app.use(`/manufacturers`, manufacturerRouter);
 
 const server = http.createServer(app);
