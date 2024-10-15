@@ -9,4 +9,14 @@ const getAllBeers = async function () {
   return response.data;
 }
 
-export default {getAllBeers};
+const getBeerById = async function (beerId) {
+  const response = await axios.get(`beers/${beerId}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response.data;
+}
+
+
+export default {getAllBeers, getBeerById};

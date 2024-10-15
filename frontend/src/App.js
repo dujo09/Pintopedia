@@ -3,6 +3,7 @@ import "./axios/axiosSetup";
 import BeerList from './components/Beer/BeerList';
 import { createTheme, CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
+import BeerDetailsForm from "./components/Beer/beerDetailsForm";
 
 export const darkTheme = createTheme({
   palette: {
@@ -60,6 +61,7 @@ function App() {
       <CssBaseline />
       <Routes>
         <Route path="/beers" element={<BeerList />} />
+        <Route path="/beers/:beerId" element={<BeerDetailsForm />} />
       </Routes>
     </ThemeProvider>
 );
