@@ -10,6 +10,7 @@ const courseTableHeaderCells = [
   { id: "averagePrice", numeric: true, label: "Prosječna cijena", disablePadding: false },
   { id: "rating", numeric: true, label: "Ocjena", disablePadding: false },
   { id: "color", numeric: false, label: "Boja", disablePadding: false },
+  { id: "manufacturer", numeric: false, label: "Proizvođač", disablePadding: false },
 ];
 
 function BeerView(beer) {
@@ -19,6 +20,7 @@ function BeerView(beer) {
   this.averagePrice = beer.averagePrice;
   this.color = beer.color;
   this.rating = beer.rating;
+  this.manufacturer = beer.manufacturer.name
 }
 
 export default function BeerList() {

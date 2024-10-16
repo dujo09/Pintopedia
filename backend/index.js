@@ -21,7 +21,7 @@ app.use(express.json());
 
 app.use(logMiddleware);
 app.use(`${BASE_URL}beers`, beerRouter);
-app.use(`/manufacturers`, manufacturerRouter);
+app.use(`${BASE_URL}manufacturers`, manufacturerRouter);
 
 const server = http.createServer(app);
 

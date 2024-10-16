@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Button, TextField } from '@mui/material';
+import { Button, MenuItem, Select, TextField } from '@mui/material';
 import beerService from './BeerService';
 import {useParams} from "react-router-dom";
 
@@ -25,11 +25,15 @@ const validationSchema = yup.object({
     flavorDescription: yup
         .string("Unesi polje")
         .required("Polje je obavezno"),
+    manufacturer: yup
+        .string("Unesi polje")
+        .required("Polje je obavezno"),
 });
 
 export default function BeerDetailsForm() {
   const {beerId} = useParams();
   const [beerData, setBeerData] = useState({});
+  const [manufacturers, setManufacturers] = useState([]);
   const [isViewMode, setViewMode] = useState(!!beerId);
 
   const formik = useFormik({
@@ -41,6 +45,7 @@ export default function BeerDetailsForm() {
       averagePrice: beerData.averagePrice || "",
       rating: beerData.rating || "",
       flavorDescription: beerData.flavorDescription || "",
+      manufacturer: beerData.manufacturer || ""
     },
     validationSchema: validationSchema,
     onSubmit: (values) => handleSubmit(values)
@@ -65,14 +70,25 @@ export default function BeerDetailsForm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await beerService.getBeerById(beerId);
-        setBeerData(response);
+        if (beerId) {
+          const beerData = await beerService.getBeerById(beerId);
+          setBeerData(beerData);
+        }
+
+        const manufacturers = await beerService.getAllManufacturersForDropdown();
+        const manufacturersData = manufacturers.map((manufacturer) => {
+          return {
+            id: manufacturer._id,
+            name: manufacturer.name
+          }
+        });
+        setManufacturers(manufacturersData);
       } catch (err) {
         console.log("Error getting beer data: ", err);
       }
     };
 
-    if (beerId) fetchData();
+    fetchData();
   }, []);
 
   return (
@@ -151,6 +167,24 @@ export default function BeerDetailsForm() {
           error={formik.touched.flavorDescription && Boolean(formik.errors.flavorDescription)}
           helperText={formik.touched.flavorDescription && formik.errors.flavorDescription}
         />
+        <Select
+          disabled={isViewMode}
+          fullWidth
+          id="manufacturer"
+          name="manufacturer"
+          label="Proizvođač"
+          value={formik.values.manufacturer}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.manufacturerId && Boolean(formik.errors.manufacturer)}
+          // helperText={formik.touched.manufacturer && formik.errors.manufacturer}
+        >
+        {manufacturers.map((manufacturer) => (
+          <MenuItem key={`manufacturer-field-${manufacturer.id}`} value={manufacturer.id}>
+            {manufacturer.name}
+          </MenuItem>
+        ))}
+      </Select>
       {!isViewMode && <Button color="primary" variant="contained" fullWidth type="submit">Spremi</Button>}
       </form>
     </>

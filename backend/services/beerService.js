@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 import Beer from "../models/Beer.js";
 
 const getAllBeersDb = async function () {
-  const beers = await Beer.find({});
+  const beers = await Beer.find({}).populate("manufacturer");
   return beers;
 };
 

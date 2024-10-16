@@ -45,4 +45,13 @@ const deleteBeerById = async function (beerId) {
   return response.data;
 }
 
-export default {getAllBeers, getBeerById, updateBeerById, createBeer, deleteBeerById};
+const getAllManufacturersForDropdown = async function () {
+  const response = await axios.get("manufacturers", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response.data;
+}
+
+export default {getAllBeers, getBeerById, updateBeerById, createBeer, deleteBeerById, getAllManufacturersForDropdown};
