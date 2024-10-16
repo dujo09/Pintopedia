@@ -24,6 +24,11 @@ const updateBeerByIdDb = async function (id, beerData) {
   return beer;
 };
 
+const createBeerDb = async function (beerData) {
+  const beer = await Beer.create(beerData);
+  return beer;
+};
+
 const deleteBeerByIdDb = async function (id) {
   if (!ObjectId.isValid(id)) return null;
 
@@ -31,4 +36,4 @@ const deleteBeerByIdDb = async function (id) {
   return result.deletedCount;
 };
 
-export default { getAllBeersDb, getBeerByIdDb, updateBeerByIdDb, deleteBeerByIdDb };
+export default { getAllBeersDb, getBeerByIdDb, updateBeerByIdDb, createBeerDb, deleteBeerByIdDb };

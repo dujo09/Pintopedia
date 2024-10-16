@@ -21,6 +21,19 @@ const updateBeerById = Joi.object({
   }),
 });
 
+const createBeer = Joi.object({
+  params: Joi.object({
+  }),
+  body: Joi.object({
+    name: Joi.string().required(),
+    alcoholPercentage: Joi.number().required(),
+    color: Joi.string().required(),
+    averagePrice: Joi.string().required(),
+    rating: Joi.number().min(1).max(5).required(),
+    flavorDescription: Joi.string().required(),
+  }),
+});
+
 const deleteBeerById = Joi.object({
   params: Joi.object({
     id: Joi.string().required(),
@@ -28,4 +41,4 @@ const deleteBeerById = Joi.object({
   body: Joi.object(),
 });
 
-export default { getBeerById, updateBeerById, deleteBeerById };
+export default { getBeerById, updateBeerById, createBeer, deleteBeerById };

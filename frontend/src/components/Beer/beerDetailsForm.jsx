@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Button, TextField } from '@mui/material';
 import beerService from './BeerService';
-import{useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 
 const validationSchema = yup.object({
     name: yup
@@ -29,42 +29,58 @@ const validationSchema = yup.object({
 
 export default function BeerDetailsForm() {
   const {beerId} = useParams();
-  const [beerData, setBeerData] = useState({});   
-  
+  const [beerData, setBeerData] = useState({});
+  const [isViewMode, setViewMode] = useState(!!beerId);
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      name: beerData.name || "", 
-      alcoholPercentage: beerData.alcoholPercentage || "", 
-      color: beerData.color || "", 
-      averagePrice: beerData.averagePrice || "", 
-      rating: beerData.rating || "", 
-      flavorDescription: beerData.flavorDescription || "", 
+      name: beerData.name || "",
+      alcoholPercentage: beerData.alcoholPercentage || "",
+      color: beerData.color || "",
+      averagePrice: beerData.averagePrice || "",
+      rating: beerData.rating || "",
+      flavorDescription: beerData.flavorDescription || "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
+    onSubmit: (values) => handleSubmit(values)
   });
+
+  const handleSubmit = async function(values) {
+    if (beerId) updateBeer(values);
+    else createBeer(values);
+    setViewMode(true);
+  }
+
+  async function updateBeer(values) {
+    const updatedBeerData = await beerService.updateBeerById(beerId, values);
+    setBeerData(updatedBeerData);
+  }
+
+  async function createBeer(values) {
+    const createdBeerData = await beerService.createBeer(values);
+    setBeerData(createdBeerData);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await beerService.getBeerById(beerId);
-        console.log(beerData);
         setBeerData(response);
       } catch (err) {
         console.log("Error getting beer data: ", err);
       }
     };
 
-    fetchData();
-  }, [])
+    if (beerId) fetchData();
+  }, []);
 
   return (
-    <div>
+    <>
+      {isViewMode && <Button variant="contained" onClick={() => setViewMode(false)}>Uredi</Button>}
       <form onSubmit={formik.handleSubmit}>
         <TextField
+          disabled={isViewMode}
           fullWidth
           id="name"
           name="name"
@@ -76,6 +92,7 @@ export default function BeerDetailsForm() {
           helperText={formik.touched.name && formik.errors.name}
         />
         <TextField
+          disabled={isViewMode}
           fullWidth
           id="alcoholPercentage"
           name="alcoholPercentage"
@@ -87,6 +104,7 @@ export default function BeerDetailsForm() {
           helperText={formik.touched.alcoholPercentage && formik.errors.alcoholPercentage}
         />
         <TextField
+          disabled={isViewMode}
           fullWidth
           id="color"
           name="color"
@@ -98,6 +116,7 @@ export default function BeerDetailsForm() {
           helperText={formik.touched.color && formik.errors.color}
         />
         <TextField
+          disabled={isViewMode}
           fullWidth
           id="averagePrice"
           name="averagePrice"
@@ -109,6 +128,7 @@ export default function BeerDetailsForm() {
           helperText={formik.touched.averagePrice && formik.errors.averagePrice}
         />
         <TextField
+          disabled={isViewMode}
           fullWidth
           id="rating"
           name="rating"
@@ -120,6 +140,7 @@ export default function BeerDetailsForm() {
           helperText={formik.touched.rating && formik.errors.rating}
         />
         <TextField
+          disabled={isViewMode}
           fullWidth
           id="flavorDescription"
           name="flavorDescription"
@@ -130,10 +151,8 @@ export default function BeerDetailsForm() {
           error={formik.touched.flavorDescription && Boolean(formik.errors.flavorDescription)}
           helperText={formik.touched.flavorDescription && formik.errors.flavorDescription}
         />
-        <Button color="primary" variant="contained" fullWidth type="submit">
-          Submit
-        </Button>
+      {!isViewMode && <Button color="primary" variant="contained" fullWidth type="submit">Spremi</Button>}
       </form>
-    </div>
+    </>
   );
 };

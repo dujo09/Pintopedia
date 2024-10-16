@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import SharedTable from "../Shared/SharedTable";
 import beerService from "./BeerService";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const courseTableHeaderCells = [
   { id: "name", numeric: false, label: "Naziv", disablePadding: false },
@@ -22,6 +24,7 @@ function BeerView(beer) {
 export default function BeerList() {
   const [beers, setBeers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,8 +44,38 @@ export default function BeerList() {
     setSelectedItem(selectedItem);
   };
 
+  const handleClickCreate = () => {
+    navigate("/beers/create");
+  }
+
+  const handleClickUpdate = () => {
+    if (!selectedItem) return;
+    navigate(`/beers/${selectedItem.id}`);
+  }
+
+  const handleClickDelete = async () => {
+    if (!selectedItem) return;
+    
+    try {
+      const deleteCount = await beerService.deleteBeerById(selectedItem.id);
+      if (deleteCount !== 1) return;
+
+      const index = beers.findIndex((item) => item.id === selectedItem.id);
+      if (index !== -1) {
+        const updatedBeers = [...beers.slice(0, index), ...beers.slice(index + 1)];
+        setBeers(updatedBeers);
+        setSelectedItem(null);
+      }
+    } catch(err) {
+      console.log("Error deleting beer: ", err);
+    }
+  }
+
   return (
     <>
+        <Button variant="contained" onClick={handleClickCreate}>Dodaj</Button>
+        <Button variant="contained" onClick={handleClickUpdate} disabled={!selectedItem}>Detalji</Button>
+        <Button variant="contained" onClick={handleClickDelete} disabled={!selectedItem}>Ukloni</Button>
         <SharedTable
           headCells={courseTableHeaderCells}
           rows={beers}

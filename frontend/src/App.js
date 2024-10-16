@@ -62,6 +62,7 @@ function App() {
       <Routes>
         <Route path="/beers" element={<BeerList />} />
         <Route path="/beers/:beerId" element={<BeerDetailsForm />} />
+        <Route path="/beers/create" element={<BeerDetailsForm />} />
       </Routes>
     </ThemeProvider>
 );
