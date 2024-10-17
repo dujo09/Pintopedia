@@ -9,7 +9,10 @@ const DATABASE_NAME = process.env.DATABASE_NAME;
 const MONGO_URL = process.env.MONGO_URL;
 
 const insertIntoDatabase = async (filename, model) => {
-  const beerData = await fs.readFileSync("databaseSeeding/data/" + filename, "utf-8");
+  const beerData = await fs.readFileSync(
+    "databaseSeeding/data/" + filename,
+    "utf-8",
+  );
 
   await model.deleteMany({});
   console.log("Existing data cleared for ", model);

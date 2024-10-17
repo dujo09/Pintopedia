@@ -36,4 +36,10 @@ const deleteBeerByIdDb = async function (id) {
   return result.deletedCount;
 };
 
-export default { getAllBeersDb, getBeerByIdDb, updateBeerByIdDb, createBeerDb, deleteBeerByIdDb };
+export default {
+  getAllBeersDb,
+  getBeerByIdDb,
+  updateBeerByIdDb,
+  createBeerDb,
+  deleteBeerByIdDb,
+};

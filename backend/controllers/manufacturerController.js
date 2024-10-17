@@ -14,7 +14,8 @@ const getManufacturerById = async function (req, res) {
   const id = req.params.id;
   try {
     const manufacturer = await manufacturerService.getManufacturerByIdDb(id);
-    if (!manufacturer) return res.status(404).json({ message: "Manufacturer not found" });
+    if (!manufacturer)
+      return res.status(404).json({ message: "Manufacturer not found" });
 
     return res.status(200).json(manufacturer);
   } catch (err) {
@@ -27,8 +28,12 @@ const updateManufacturerById = async function (req, res) {
   const id = req.params.id;
   const manufacturerData = req.body;
   try {
-    const manufacturer = await manufacturerService.updateManufacturerByIdDb(id, manufacturerData);
-    if (!manufacturer) return res.status(404).json({ message: "Manufacturer not found" });
+    const manufacturer = await manufacturerService.updateManufacturerByIdDb(
+      id,
+      manufacturerData,
+    );
+    if (!manufacturer)
+      return res.status(404).json({ message: "Manufacturer not found" });
 
     return res.status(200).json(manufacturer);
   } catch (err) {
@@ -41,7 +46,8 @@ const deleteManufacturerById = async function (req, res) {
   const id = req.params.id;
   try {
     const deletedCount = await manufacturerService.deleteManufacturerByIdDb(id);
-    if (!deletedCount) return res.status(404).json({ message: "Manufacturer not found" });
+    if (!deletedCount)
+      return res.status(404).json({ message: "Manufacturer not found" });
 
     return res.status(200).json(deletedCount);
   } catch (err) {
@@ -50,4 +56,9 @@ const deleteManufacturerById = async function (req, res) {
   }
 };
 
-export default { getAllManufacturers, getManufacturerById, updateManufacturerById, deleteManufacturerById };
+export default {
+  getAllManufacturers,
+  getManufacturerById,
+  updateManufacturerById,
+  deleteManufacturerById,
+};

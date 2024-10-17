@@ -7,7 +7,7 @@ const getAllBeers = async function () {
     },
   });
   return response.data;
-}
+};
 
 const getBeerById = async function (beerId) {
   const response = await axios.get(`beers/${beerId}`, {
@@ -16,7 +16,7 @@ const getBeerById = async function (beerId) {
     },
   });
   return response.data;
-}
+};
 
 const updateBeerById = async function (beerId, beerData) {
   const response = await axios.put(`beers/${beerId}`, beerData, {
@@ -25,7 +25,7 @@ const updateBeerById = async function (beerId, beerData) {
     },
   });
   return response.data;
-}
+};
 
 const createBeer = async function (beerData) {
   const response = await axios.post("beers", beerData, {
@@ -34,7 +34,7 @@ const createBeer = async function (beerData) {
     },
   });
   return response.data;
-}
+};
 
 const deleteBeerById = async function (beerId) {
   const response = await axios.delete(`beers/${beerId}`, {
@@ -43,7 +43,7 @@ const deleteBeerById = async function (beerId) {
     },
   });
   return response.data;
-}
+};
 
 const getAllManufacturersForDropdown = async function () {
   const response = await axios.get("manufacturers", {
@@ -52,6 +52,13 @@ const getAllManufacturersForDropdown = async function () {
     },
   });
   return response.data;
-}
+};
 
-export default {getAllBeers, getBeerById, updateBeerById, createBeer, deleteBeerById, getAllManufacturersForDropdown};
+export default {
+  getAllBeers,
+  getBeerById,
+  updateBeerById,
+  createBeer,
+  deleteBeerById,
+  getAllManufacturersForDropdown,
+};

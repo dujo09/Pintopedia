@@ -18,13 +18,12 @@ const updateBeerById = Joi.object({
     averagePrice: Joi.string(),
     rating: Joi.number().min(1).max(5),
     flavorDescription: Joi.string(),
-    manufacturer: Joi.string()
+    manufacturer: Joi.string(),
   }),
 });
 
 const createBeer = Joi.object({
-  params: Joi.object({
-  }),
+  params: Joi.object({}),
   body: Joi.object({
     name: Joi.string().required(),
     alcoholPercentage: Joi.number().required(),
@@ -32,7 +31,7 @@ const createBeer = Joi.object({
     averagePrice: Joi.string().required(),
     rating: Joi.number().min(1).max(5).required(),
     flavorDescription: Joi.string().required(),
-    manufacturer: Joi.string().required()
+    manufacturer: Joi.string().required(),
   }),
 });
 

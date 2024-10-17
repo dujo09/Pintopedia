@@ -28,4 +28,8 @@ const deleteManufacturerById = Joi.object({
   body: Joi.object(),
 });
 
-export default { getManufacturerById, updateManufacturerById, deleteManufacturerById };
+export default {
+  getManufacturerById,
+  updateManufacturerById,
+  deleteManufacturerById,
+};

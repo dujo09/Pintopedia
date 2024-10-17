@@ -15,7 +15,7 @@ const getBeerById = async function (req, res) {
   console.log("id", id);
   try {
     const beer = await beerService.getBeerByIdDb(id);
-    console.log("beer", beer)
+    console.log("beer", beer);
     if (!beer) return res.status(404).json({ message: "Beer not found" });
 
     return res.status(200).json(beer);
@@ -43,7 +43,6 @@ const createBeer = async function (req, res) {
   const beerData = req.body;
   try {
     const beer = await beerService.createBeerDb(beerData);
-    // if (!beer) return res.status(404).json({ message: "Beer not found" });
 
     return res.status(200).json(beer);
   } catch (err) {
@@ -56,7 +55,8 @@ const deleteBeerById = async function (req, res) {
   const id = req.params.id;
   try {
     const deletedCount = await beerService.deleteBeerByIdDb(id);
-    if (!deletedCount) return res.status(404).json({ message: "Beer not found" });
+    if (!deletedCount)
+      return res.status(404).json({ message: "Beer not found" });
 
     return res.status(200).json(deletedCount);
   } catch (err) {
@@ -65,4 +65,10 @@ const deleteBeerById = async function (req, res) {
   }
 };
 
-export default { getAllBeers, getBeerById, updateBeerById, createBeer, deleteBeerById };
+export default {
+  getAllBeers,
+  getBeerById,
+  updateBeerById,
+  createBeer,
+  deleteBeerById,
+};

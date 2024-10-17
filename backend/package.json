@@ -1,7 +1,4 @@
 {
-  "prettier": {
-    "printWidth": 110
-  },
   "type": "module",
   "name": "server",
   "version": "1.0.0",

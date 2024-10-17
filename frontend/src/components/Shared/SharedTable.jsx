@@ -26,7 +26,8 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function EnhancedTableHead(props) {
-  const { headCells, order, orderBy, rowCount, onRequestSort, columnWidths } = props;
+  const { headCells, order, orderBy, rowCount, onRequestSort, columnWidths } =
+    props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -38,7 +39,10 @@ function EnhancedTableHead(props) {
           <TableCell
             style={
               headCell.flexGrow
-                ? { flexGrow: headCell.flexGrow, minWidth: `${columnWidths[headCell.id] || 100}px` }
+                ? {
+                    flexGrow: headCell.flexGrow,
+                    minWidth: `${columnWidths[headCell.id] || 100}px`,
+                  }
                 : { width: `${columnWidths[headCell.id] || 100}px` }
             }
             key={String(headCell.id)}
@@ -87,17 +91,26 @@ export default function SharedTable({
 
     headCells.forEach((headCell) => {
       const cellLabelCharacterCount = String(headCell.label).length + 10;
-      const cellWidth = Math.min(maxWidth, Math.max(minWidth, cellLabelCharacterCount * scaleFactor));
+      const cellWidth = Math.min(
+        maxWidth,
+        Math.max(minWidth, cellLabelCharacterCount * scaleFactor),
+      );
       columnWidths[headCell.id] = cellWidth;
     });
 
     rows.forEach((row) => {
       headCells.forEach((headCell) => {
         const cellCharacterCount = String(row[headCell.id]).length;
-        const cellWidth = Math.min(maxWidth, Math.max(minWidth, cellCharacterCount * scaleFactor));
+        const cellWidth = Math.min(
+          maxWidth,
+          Math.max(minWidth, cellCharacterCount * scaleFactor),
+        );
         if (!columnWidths[headCell.id]) {
           columnWidths[headCell.id] = cellWidth;
-        } else if (columnWidths[headCell.id] !== undefined && columnWidths[headCell.id] < cellWidth) {
+        } else if (
+          columnWidths[headCell.id] !== undefined &&
+          columnWidths[headCell.id] < cellWidth
+        ) {
           columnWidths[headCell.id] = cellWidth;
         }
       });
@@ -141,7 +154,8 @@ export default function SharedTable({
   const isSelected = (id) => selected === id;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const visibleRows = useMemo(
     () =>

@@ -1,37 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { Button, MenuItem, Select, TextField } from '@mui/material';
-import beerService from './BeerService';
-import {useParams} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import beerService from "./BeerService";
+import { useParams } from "react-router-dom";
 
 const validationSchema = yup.object({
-    name: yup
-        .string("Unesi polje")
-        .required("Polje je obavezno"),
-    alcoholPercentage: yup
-        .string("Unesi polje")
-        .required("Polje je obavezno"),
-    color: yup
-        .string("Unesi polje")
-        .required("Polje je obavezno"),
-    averagePrice: yup
-        .string("Unesi polje")
-        .required("Polje je obavezno"),
-    rating: yup
-        .string("Unesi polje")
-        .required("Polje je obavezno"),
-    flavorDescription: yup
-        .string("Unesi polje")
-        .required("Polje je obavezno"),
-    manufacturer: yup
-        .string("Unesi polje")
-        .required("Polje je obavezno"),
+  name: yup.string("Unesi polje").required("Polje je obavezno"),
+  alcoholPercentage: yup.string("Unesi polje").required("Polje je obavezno"),
+  color: yup.string("Unesi polje").required("Polje je obavezno"),
+  averagePrice: yup.string("Unesi polje").required("Polje je obavezno"),
+  rating: yup.string("Unesi polje").required("Polje je obavezno"),
+  flavorDescription: yup.string("Unesi polje").required("Polje je obavezno"),
+  manufacturer: yup.string("Unesi polje").required("Polje je obavezno"),
 });
 
 export default function BeerDetailsForm() {
-  const {beerId} = useParams();
+  const { beerId } = useParams();
   const [beerData, setBeerData] = useState({});
   const [manufacturers, setManufacturers] = useState([]);
   const [isViewMode, setViewMode] = useState(!!beerId);
@@ -45,17 +38,17 @@ export default function BeerDetailsForm() {
       averagePrice: beerData.averagePrice || "",
       rating: beerData.rating || "",
       flavorDescription: beerData.flavorDescription || "",
-      manufacturer: beerData.manufacturer || ""
+      manufacturer: beerData.manufacturer || "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => handleSubmit(values)
+    onSubmit: (values) => handleSubmit(values),
   });
 
-  const handleSubmit = async function(values) {
+  const handleSubmit = async function (values) {
     if (beerId) updateBeer(values);
     else createBeer(values);
     setViewMode(true);
-  }
+  };
 
   async function updateBeer(values) {
     const updatedBeerData = await beerService.updateBeerById(beerId, values);
@@ -75,12 +68,13 @@ export default function BeerDetailsForm() {
           setBeerData(beerData);
         }
 
-        const manufacturers = await beerService.getAllManufacturersForDropdown();
+        const manufacturers =
+          await beerService.getAllManufacturersForDropdown();
         const manufacturersData = manufacturers.map((manufacturer) => {
           return {
             id: manufacturer._id,
-            name: manufacturer.name
-          }
+            name: manufacturer.name,
+          };
         });
         setManufacturers(manufacturersData);
       } catch (err) {
@@ -93,7 +87,11 @@ export default function BeerDetailsForm() {
 
   return (
     <>
-      {isViewMode && <Button variant="contained" onClick={() => setViewMode(false)}>Uredi</Button>}
+      {isViewMode && (
+        <Button variant="contained" onClick={() => setViewMode(false)}>
+          Uredi
+        </Button>
+      )}
       <form onSubmit={formik.handleSubmit}>
         <TextField
           disabled={isViewMode}
@@ -116,8 +114,13 @@ export default function BeerDetailsForm() {
           value={formik.values.alcoholPercentage}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.alcoholPercentage && Boolean(formik.errors.alcoholPercentage)}
-          helperText={formik.touched.alcoholPercentage && formik.errors.alcoholPercentage}
+          error={
+            formik.touched.alcoholPercentage &&
+            Boolean(formik.errors.alcoholPercentage)
+          }
+          helperText={
+            formik.touched.alcoholPercentage && formik.errors.alcoholPercentage
+          }
         />
         <TextField
           disabled={isViewMode}
@@ -140,7 +143,9 @@ export default function BeerDetailsForm() {
           value={formik.values.averagePrice}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.averagePrice && Boolean(formik.errors.averagePrice)}
+          error={
+            formik.touched.averagePrice && Boolean(formik.errors.averagePrice)
+          }
           helperText={formik.touched.averagePrice && formik.errors.averagePrice}
         />
         <TextField
@@ -164,29 +169,50 @@ export default function BeerDetailsForm() {
           value={formik.values.flavorDescription}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.flavorDescription && Boolean(formik.errors.flavorDescription)}
-          helperText={formik.touched.flavorDescription && formik.errors.flavorDescription}
+          error={
+            formik.touched.flavorDescription &&
+            Boolean(formik.errors.flavorDescription)
+          }
+          helperText={
+            formik.touched.flavorDescription && formik.errors.flavorDescription
+          }
         />
-        <Select
+
+        <FormControl
           disabled={isViewMode}
+          required
           fullWidth
-          id="manufacturer"
-          name="manufacturer"
-          label="Proizvođač"
-          value={formik.values.manufacturer}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.manufacturerId && Boolean(formik.errors.manufacturer)}
-          // helperText={formik.touched.manufacturer && formik.errors.manufacturer}
+          error={
+            formik.touched.manufacturerId && Boolean(formik.errors.manufacturer)
+          }
+          margin="normal"
         >
-        {manufacturers.map((manufacturer) => (
-          <MenuItem key={`manufacturer-field-${manufacturer.id}`} value={manufacturer.id}>
-            {manufacturer.name}
-          </MenuItem>
-        ))}
-      </Select>
-      {!isViewMode && <Button color="primary" variant="contained" fullWidth type="submit">Spremi</Button>}
+          <FormLabel htmlFor="manufacturer">Proizvođač</FormLabel>
+          <Select
+            fullWidth
+            id="manufacturer"
+            name="manufacturer"
+            value={formik.values.manufacturer}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          >
+            {manufacturers.map((manufacturer) => (
+              <MenuItem
+                key={`manufacturer-field-${manufacturer.id}`}
+                value={manufacturer.id}
+              >
+                {manufacturer.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {!isViewMode && (
+          <Button color="primary" variant="contained" fullWidth type="submit">
+            Spremi
+          </Button>
+        )}
       </form>
     </>
   );
-};
+}

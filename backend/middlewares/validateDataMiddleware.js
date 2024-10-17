@@ -2,7 +2,10 @@ import Joi from "joi";
 
 const validateDataMiddleware = (schema) => {
   return (req, res, next) => {
-    const { value, error } = schema.validate({ body: req.body, params: req.params });
+    const { value, error } = schema.validate({
+      body: req.body,
+      params: req.params,
+    });
     const isValid = error == null;
 
     if (isValid) {
