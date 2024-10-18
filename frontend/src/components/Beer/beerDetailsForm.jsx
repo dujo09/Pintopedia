@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import beerService from "./BeerService";
 import { useParams } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const validationSchema = yup.object({
   name: yup.string("Unesi polje").required("Polje je obavezno"),
@@ -28,6 +29,7 @@ export default function BeerDetailsForm() {
   const [beerData, setBeerData] = useState({});
   const [manufacturers, setManufacturers] = useState([]);
   const [isViewMode, setViewMode] = useState(!!beerId);
+  const { userSession } = useAuth();
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -51,13 +53,22 @@ export default function BeerDetailsForm() {
   };
 
   async function updateBeer(values) {
-    const updatedBeerData = await beerService.updateBeerById(beerId, values);
-    setBeerData(updatedBeerData);
+    try {
+      const updatedBeerData = await beerService.updateBeerById(beerId, values);
+      setBeerData(updatedBeerData);
+    } catch (err) {
+      console.log("Error updating Beer: ", err);
+      formik.resetForm();
+    }
   }
 
   async function createBeer(values) {
-    const createdBeerData = await beerService.createBeer(values);
-    setBeerData(createdBeerData);
+    try {
+      const createdBeerData = await beerService.createBeer(values);
+      setBeerData(createdBeerData);
+    } catch (err) {
+      console.log("Error creating Beer: ", err);
+    }
   }
 
   useEffect(() => {
@@ -87,7 +98,7 @@ export default function BeerDetailsForm() {
 
   return (
     <>
-      {isViewMode && (
+      {userSession.role === "admin" && isViewMode && (
         <Button variant="contained" onClick={() => setViewMode(false)}>
           Uredi
         </Button>

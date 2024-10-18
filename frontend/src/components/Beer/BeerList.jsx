@@ -3,6 +3,7 @@ import SharedTable from "../Shared/SharedTable";
 import beerService from "./BeerService";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const courseTableHeaderCells = [
   { id: "name", numeric: false, label: "Naziv", disablePadding: false },
@@ -42,6 +43,7 @@ export default function BeerList() {
   const [beers, setBeers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
+  const { userSession } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -93,9 +95,12 @@ export default function BeerList() {
 
   return (
     <>
-      <Button variant="contained" onClick={handleClickCreate}>
-        Dodaj
-      </Button>
+      {userSession.role === "admin" && (
+        <Button variant="contained" onClick={handleClickCreate}>
+          Dodaj
+        </Button>
+      )}
+
       <Button
         variant="contained"
         onClick={handleClickUpdate}
@@ -103,13 +108,17 @@ export default function BeerList() {
       >
         Detalji
       </Button>
-      <Button
-        variant="contained"
-        onClick={handleClickDelete}
-        disabled={!selectedItem}
-      >
-        Ukloni
-      </Button>
+
+      {userSession.role === "admin" && (
+        <Button
+          variant="contained"
+          onClick={handleClickDelete}
+          disabled={userSession.role !== "admin" || !selectedItem}
+        >
+          Ukloni
+        </Button>
+      )}
+
       <SharedTable
         headCells={courseTableHeaderCells}
         rows={beers}

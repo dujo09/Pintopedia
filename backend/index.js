@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 import logMiddleware from "./middlewares/logMiddleware.js";
 import beerRouter from "./routes/beerRoutes.js";
 import manufacturerRouter from "./routes/manufacturerRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 
 const PORT = process.env.SERVER_PORT || 5000;
 const BASE_URL = process.env.BASE_URL;
@@ -20,6 +21,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(logMiddleware);
+app.use(`${BASE_URL}users`, userRouter);
 app.use(`${BASE_URL}beers`, beerRouter);
 app.use(`${BASE_URL}manufacturers`, manufacturerRouter);
 

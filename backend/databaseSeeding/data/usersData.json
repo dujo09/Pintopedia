@@ -1,0 +1,12 @@
+[
+  {
+    "username": "devAdmin",
+    "passwordHash": "$2a$12$qvAc.01TyzRzsTFJZSxwmec8E4GV55d4aZcNL6UK6cBn3qsWJN8U2",
+    "role": "admin"
+  },
+  {
+    "username": "devUser",
+    "passwordHash": "$2a$12$JX/1hiVZ/Z4l41d6bnFk2OImVoL2ypK37myt22JrywNDkZniL/w4m",
+    "role": "user"
+  }
+]

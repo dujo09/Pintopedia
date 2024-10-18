@@ -15,7 +15,7 @@ const getManufacturerById = async function (req, res) {
   try {
     const manufacturer = await manufacturerService.getManufacturerByIdDb(id);
     if (!manufacturer)
-      return res.status(404).json({ message: "Manufacturer not found" });
+      return res.status(404).json({ message: "Error Manufacturer not found" });
 
     return res.status(200).json(manufacturer);
   } catch (err) {
@@ -27,13 +27,19 @@ const getManufacturerById = async function (req, res) {
 const updateManufacturerById = async function (req, res) {
   const id = req.params.id;
   const manufacturerData = req.body;
+  const userRole = res.locals.user.role;
   try {
+    if (userRole !== "admin")
+      return res
+        .status(403)
+        .json({ message: "Error User doesn't have permission" });
+
     const manufacturer = await manufacturerService.updateManufacturerByIdDb(
       id,
       manufacturerData,
     );
     if (!manufacturer)
-      return res.status(404).json({ message: "Manufacturer not found" });
+      return res.status(404).json({ message: "Error Manufacturer not found" });
 
     return res.status(200).json(manufacturer);
   } catch (err) {
@@ -44,10 +50,16 @@ const updateManufacturerById = async function (req, res) {
 
 const deleteManufacturerById = async function (req, res) {
   const id = req.params.id;
+  const userRole = res.locals.user.role;
   try {
+    if (userRole !== "admin")
+      return res
+        .status(403)
+        .json({ message: "Error User doesn't have permission" });
+
     const deletedCount = await manufacturerService.deleteManufacturerByIdDb(id);
     if (!deletedCount)
-      return res.status(404).json({ message: "Manufacturer not found" });
+      return res.status(404).json({ message: "Error Manufacturer not found" });
 
     return res.status(200).json(deletedCount);
   } catch (err) {

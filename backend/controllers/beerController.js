@@ -16,7 +16,7 @@ const getBeerById = async function (req, res) {
   try {
     const beer = await beerService.getBeerByIdDb(id);
     console.log("beer", beer);
-    if (!beer) return res.status(404).json({ message: "Beer not found" });
+    if (!beer) return res.status(404).json({ message: "Error Beer not found" });
 
     return res.status(200).json(beer);
   } catch (err) {
@@ -28,9 +28,15 @@ const getBeerById = async function (req, res) {
 const updateBeerById = async function (req, res) {
   const id = req.params.id;
   const beerData = req.body;
+  const userRole = res.locals.user.role;
   try {
+    if (userRole !== "admin")
+      return res
+        .status(403)
+        .json({ message: "Error User doesn't have permission" });
+
     const beer = await beerService.updateBeerByIdDb(id, beerData);
-    if (!beer) return res.status(404).json({ message: "Beer not found" });
+    if (!beer) return res.status(404).json({ message: "Error Beer not found" });
 
     return res.status(200).json(beer);
   } catch (err) {
@@ -41,7 +47,13 @@ const updateBeerById = async function (req, res) {
 
 const createBeer = async function (req, res) {
   const beerData = req.body;
+  const userRole = res.locals.user.role;
   try {
+    if (userRole !== "admin")
+      return res
+        .status(403)
+        .json({ message: "Error User doesn't have permission" });
+
     const beer = await beerService.createBeerDb(beerData);
 
     return res.status(200).json(beer);
@@ -53,10 +65,16 @@ const createBeer = async function (req, res) {
 
 const deleteBeerById = async function (req, res) {
   const id = req.params.id;
+  const userRole = res.locals.user.role;
   try {
+    if (userRole !== "admin")
+      return res
+        .status(403)
+        .json({ message: "Error User doesn't have permission" });
+
     const deletedCount = await beerService.deleteBeerByIdDb(id);
     if (!deletedCount)
-      return res.status(404).json({ message: "Beer not found" });
+      return res.status(404).json({ message: "Error Beer not found" });
 
     return res.status(200).json(deletedCount);
   } catch (err) {

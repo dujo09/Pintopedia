@@ -1,9 +1,14 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./axios/axiosSetup";
 import BeerList from "./components/Beer/BeerList";
 import { createTheme, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import BeerDetailsForm from "./components/Beer/beerDetailsForm";
+import { AuthProvider, useAuth } from "./hooks/useAuth";
+import { ProtectedRoute } from "./components/Shared/ProtectedRoute";
+import Login from "./components/Authentification/Login";
+import { useEffect } from "react";
+import { setupAxiosInterceptors } from "./axios/axiosSetup";
 
 export const darkTheme = createTheme({
   palette: {
@@ -56,13 +61,50 @@ export const lightTheme = createTheme({
 });
 
 function App() {
+  const { userSession, logout } = useAuth();
+
+  useEffect(() => {
+    if (userSession) {
+      setupAxiosInterceptors(() => userSession?.token || null, logout);
+    }
+  }, [userSession, logout]);
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
+
       <Routes>
-        <Route path="/beers" element={<BeerList />} />
-        <Route path="/beers/:beerId" element={<BeerDetailsForm />} />
-        <Route path="/beers/create" element={<BeerDetailsForm />} />
+        <Route path="/login" element={<Login />} />
+
+        <Route
+          path="/beers"
+          element={
+            <ProtectedRoute>
+              {" "}
+              <BeerList />{" "}
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/beers/:beerId"
+          element={
+            <ProtectedRoute>
+              {" "}
+              <BeerDetailsForm />{" "}
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/beers/create"
+          element={
+            <ProtectedRoute>
+              {" "}
+              <BeerDetailsForm />{" "}
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </ThemeProvider>
   );

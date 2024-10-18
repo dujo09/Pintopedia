@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import Beer from "../models/Beer.js";
 import Manufacturer from "../models/Manufacturer.js";
 import dotenv from "dotenv";
+import User from "../models/User.js";
 dotenv.config();
 
 const DATABASE_NAME = process.env.DATABASE_NAME;
@@ -26,6 +27,7 @@ const seedDatabase = async () => {
 
     await insertIntoDatabase("manufacturersData.json", Manufacturer);
     await insertIntoDatabase("beersData.json", Beer);
+    await insertIntoDatabase("usersData.json", User);
 
     mongoose.connection.close();
   } catch (err) {
