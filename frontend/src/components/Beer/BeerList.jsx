@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import SharedTable from "../Shared/SharedTable";
 import beerService from "./BeerService";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 function BeerView(beer) {
   this.id = beer._id;
@@ -23,51 +26,92 @@ export default function BeerList() {
   const { userSession } = useAuth();
 
   const courseTableHeaderCells = [
-    { id: "name", numeric: false, label: "Naziv", disablePadding: false },
+    {
+      id: "name",
+      numeric: false,
+      label: "Naziv",
+      disablePadding: false,
+      enableSort: true,
+    },
     {
       id: "alcoholPercentage",
       numeric: true,
       label: "Postotak alkohola",
       disablePadding: false,
+      enableSort: true,
     },
     {
       id: "averagePrice",
       numeric: true,
       label: "Prosječna cijena",
       disablePadding: false,
+      enableSort: true,
     },
-    { id: "rating", numeric: true, label: "Ocjena", disablePadding: false },
-    { id: "color", numeric: false, label: "Boja", disablePadding: false },
+    {
+      id: "rating",
+      numeric: true,
+      label: "Ocjena",
+      disablePadding: false,
+      enableSort: true,
+    },
+    {
+      id: "color",
+      numeric: false,
+      label: "Boja",
+      disablePadding: false,
+      enableSort: true,
+    },
     {
       id: "manufacturer",
       numeric: false,
       label: "Proizvođač",
       disablePadding: false,
+      enableSort: true,
     },
     {
       id: "isLiked",
-      numeric: false,
       label: "Sviđa mi se",
+      numeric: false,
       disablePadding: true,
-      isToggleButton: true,
-      toggleButtonFunction: async (beerIndex, beerId) => {
-        if (beerIndex === -1) return;
+      enableSort: true,
+      renderField: (isLiked, beerIndex, beerId) => {
+        return (
+          <IconButton
+            onClick={async (event) => {
+              event.stopPropagation();
 
-        // const updatedBeers = [
-        //   ...beers.slice(0, beerIndex),
-        //   { ...beers[beerIndex], isLiked: !beers[beerIndex].isLiked },
-        //   ...beers.slice(beerIndex + 1),
-        // ];
-        // setBeers(updatedBeers);
+              const response = await beerService.likeBeerById(beerId);
 
-        const response = await beerService.likeBeerById(beerId);
-
-        const updatedBeers = [
-          ...beers.slice(0, beerIndex),
-          { ...beers[beerIndex], isLiked: response.isLiked },
-          ...beers.slice(beerIndex + 1),
-        ];
-        setBeers(updatedBeers);
+              const updatedBeers = [
+                ...beers.slice(0, beerIndex),
+                { ...beers[beerIndex], isLiked: response.isLiked },
+                ...beers.slice(beerIndex + 1),
+              ];
+              setBeers(updatedBeers);
+            }}
+            color="primary"
+          >
+            {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          </IconButton>
+        );
+      },
+    },
+    {
+      disablePadding: true,
+      enableSort: false,
+      renderField: (fieldValue, beerIndex, beerId) => {
+        return (
+          <IconButton
+            onClick={(event) => {
+              event.stopPropagation();
+              handleClickDetails(beerId);
+            }}
+            color="primary"
+            variant="contained"
+          >
+            <OpenInNewIcon />
+          </IconButton>
+        );
       },
     },
   ];
@@ -94,9 +138,8 @@ export default function BeerList() {
     navigate("/beers/create");
   };
 
-  const handleClickUpdate = () => {
-    if (!selectedItem) return;
-    navigate(`/beers/${selectedItem.id}`);
+  const handleClickDetails = (beerId) => {
+    navigate(`/beers/${beerId}`);
   };
 
   const handleClickDelete = async () => {
@@ -128,13 +171,13 @@ export default function BeerList() {
         </Button>
       )}
 
-      <Button
+      {/* <Button
         variant="contained"
-        onClick={handleClickUpdate}
+        onClick={handleClickDetails}
         disabled={!selectedItem}
       >
         Detalji
-      </Button>
+      </Button> */}
 
       {userSession.role === "admin" && (
         <Button

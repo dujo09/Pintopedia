@@ -8,9 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { visuallyHidden } from "@mui/utils";
 import React, { useEffect, useState, useMemo } from "react";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import { IconButton } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 function getComparator(order, orderBy) {
   return order === "desc"
@@ -53,18 +51,22 @@ function EnhancedTableHead(props) {
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
+            {headCell.enableSort && (
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : "asc"}
+                onClick={createSortHandler(headCell.id)}
+              >
+                {headCell.label}
+                {orderBy === headCell.id ? (
+                  <Box component="span" sx={visuallyHidden}>
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
+                  </Box>
+                ) : null}
+              </TableSortLabel>
+            )}
           </TableCell>
         ))}
       </TableRow>
@@ -203,23 +205,9 @@ export default function SharedTable({
                       scope="row"
                       component="th"
                     >
-                      {headCell.isToggleButton ? (
-                        <IconButton
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            headCell.toggleButtonFunction(index, row.id);
-                          }}
-                          color="primary"
-                        >
-                          {row[headCell.id] ? (
-                            <FavoriteIcon />
-                          ) : (
-                            <FavoriteBorderIcon />
-                          )}
-                        </IconButton>
-                      ) : (
-                        String(row[headCell.id])
-                      )}
+                      {headCell.renderField
+                        ? headCell.renderField(row[headCell.id], index, row.id)
+                        : String(row[headCell.id])}
                     </TableCell>
                   ))}
                 </TableRow>
