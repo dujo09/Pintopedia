@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import SharedTable from "../Shared/SharedTable";
 import beerService from "./BeerService";
 import { Button, IconButton } from "@mui/material";
@@ -7,6 +7,7 @@ import { useAuth } from "../../hooks/useAuth";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { debounce } from "lodash";
 
 function BeerView(beer) {
   this.id = beer._id;
@@ -25,6 +26,7 @@ export default function BeerList() {
   const navigate = useNavigate();
   const { userSession } = useAuth();
 
+  const debounceLikeMap = useRef(new Map());
   const courseTableHeaderCells = [
     {
       id: "name",
@@ -74,20 +76,24 @@ export default function BeerList() {
       numeric: false,
       disablePadding: true,
       enableSort: true,
-      renderField: (isLiked, beerIndex, beerId) => {
+      renderField: (isLiked, beerId) => {
         return (
           <IconButton
             onClick={async (event) => {
               event.stopPropagation();
 
-              const response = await beerService.likeBeerById(beerId);
+              const beerIndex = beers.findIndex((item) => item.id === beerId);
 
-              const updatedBeers = [
-                ...beers.slice(0, beerIndex),
-                { ...beers[beerIndex], isLiked: response.isLiked },
-                ...beers.slice(beerIndex + 1),
-              ];
-              setBeers(updatedBeers);
+              setBeers((prevBeers) => {
+                const updatedBeers = [
+                  ...prevBeers.slice(0, beerIndex),
+                  { ...prevBeers[beerIndex], isLiked: !isLiked },
+                  ...prevBeers.slice(beerIndex + 1),
+                ];
+                return updatedBeers;
+              });
+
+              handleLikeClick(beerId, !isLiked);
             }}
             color="primary"
           >
@@ -99,7 +105,7 @@ export default function BeerList() {
     {
       disablePadding: true,
       enableSort: false,
-      renderField: (fieldValue, beerIndex, beerId) => {
+      renderField: (fieldValue, beerId) => {
         return (
           <IconButton
             onClick={(event) => {
@@ -115,6 +121,36 @@ export default function BeerList() {
       },
     },
   ];
+
+  const likeBeer = async (beerId, isLiked) => {
+    try {
+      const response = await beerService.likeBeerById(beerId, isLiked);
+      const beerIndex = beers.findIndex((item) => item.id === beerId);
+
+      setBeers((prevBeers) => {
+        const updatedBeers = [
+          ...prevBeers.slice(0, beerIndex),
+          { ...prevBeers[beerIndex], isLiked: response.isLikedDb },
+          ...prevBeers.slice(beerIndex + 1),
+        ];
+        return updatedBeers;
+      });
+    } catch (err) {
+      console.error("Error liking beer: ", err);
+    }
+  };
+
+  const handleLikeClick = (beerId, isLiked) => {
+    if (!debounceLikeMap.current.has(beerId)) {
+      const debouncedFunction = debounce(
+        (isLiked) => likeBeer(beerId, isLiked),
+        500,
+      );
+      debounceLikeMap.current.set(beerId, debouncedFunction);
+    }
+
+    debounceLikeMap.current.get(beerId)(isLiked);
+  };
 
   useEffect(() => {
     const fetchData = async () => {

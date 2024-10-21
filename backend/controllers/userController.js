@@ -32,9 +32,10 @@ const login = async function (req, res) {
 const likeBeerById = async function (req, res) {
   const userId = res.locals.user.id;
   const beerId = req.params.id;
+  const isLiked = req.body.isLiked;
   try {
-    const isLiked = await userService.likeBeerByIdDb(userId, beerId);
-    return res.status(200).json({ isLiked });
+    const isLikedDb = await userService.likeBeerByIdDb(userId, beerId, isLiked);
+    return res.status(200).json({ isLikedDb });
   } catch (err) {
     console.log("Error during like beer by id: ", err);
     return res.status(500).json({ message: "Error during like beer by id" });

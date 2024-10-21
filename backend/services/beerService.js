@@ -8,7 +8,7 @@ const getAllBeersForViewDb = async function (userId) {
 
   const beersWithLikeStatus = beers.map((beer) => {
     beer.isLiked =
-      user?.likedBeers && user.likedBeers.some(id => id.equals(beer._id));
+      user?.likedBeers && user.likedBeers.some((id) => id.equals(beer._id));
     return beer;
   });
 

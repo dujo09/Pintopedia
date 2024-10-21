@@ -54,12 +54,16 @@ const getAllManufacturersForDropdown = async function () {
   return response.data;
 };
 
-const likeBeerById = async function (beerId) {
-  const response = await axios.put(`users/like-beer/${beerId}`, {
-    headers: {
-      "Content-Type": "application/json",
+const likeBeerById = async function (beerId, isLiked) {
+  const response = await axios.put(
+    `users/like-beer/${beerId}`,
+    { isLiked },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
     },
-  });
+  );
   return response.data;
 };
 

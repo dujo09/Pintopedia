@@ -206,7 +206,7 @@ export default function SharedTable({
                       component="th"
                     >
                       {headCell.renderField
-                        ? headCell.renderField(row[headCell.id], index, row.id)
+                        ? headCell.renderField(row[headCell.id], row.id)
                         : String(row[headCell.id])}
                     </TableCell>
                   ))}

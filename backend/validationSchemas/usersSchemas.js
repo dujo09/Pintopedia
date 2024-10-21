@@ -12,7 +12,9 @@ const likeBeerById = Joi.object({
   params: Joi.object({
     id: Joi.string().required(),
   }),
-  body: Joi.object(),
+  body: Joi.object({
+    isLiked: Joi.boolean().required(),
+  }),
 });
 
 export default { login, likeBeerById };
