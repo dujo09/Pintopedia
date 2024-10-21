@@ -6,7 +6,7 @@ import authenticateToken from "../middlewares/authenticateTokenMiddleware.js";
 
 const beerRouter = express.Router();
 
-beerRouter.get("/", authenticateToken, beerController.getAllBeers);
+beerRouter.get("/", authenticateToken, beerController.getAllBeersForView);
 beerRouter.get(
   "/:id",
   authenticateToken,

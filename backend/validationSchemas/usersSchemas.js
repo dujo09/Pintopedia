@@ -8,4 +8,11 @@ const login = Joi.object({
   }),
 });
 
-export default { login };
+const likeBeerById = Joi.object({
+  params: Joi.object({
+    id: Joi.string().required(),
+  }),
+  body: Joi.object(),
+});
+
+export default { login, likeBeerById };

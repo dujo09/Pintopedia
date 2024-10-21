@@ -54,6 +54,15 @@ const getAllManufacturersForDropdown = async function () {
   return response.data;
 };
 
+const likeBeerById = async function (beerId) {
+  const response = await axios.put(`users/like-beer/${beerId}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response.data;
+};
+
 export default {
   getAllBeers,
   getBeerById,
@@ -61,4 +70,5 @@ export default {
   createBeer,
   deleteBeerById,
   getAllManufacturersForDropdown,
+  likeBeerById,
 };

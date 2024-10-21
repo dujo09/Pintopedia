@@ -5,30 +5,6 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
-const courseTableHeaderCells = [
-  { id: "name", numeric: false, label: "Naziv", disablePadding: false },
-  {
-    id: "alcoholPercentage",
-    numeric: true,
-    label: "Postotak alkohola",
-    disablePadding: false,
-  },
-  {
-    id: "averagePrice",
-    numeric: true,
-    label: "Prosječna cijena",
-    disablePadding: false,
-  },
-  { id: "rating", numeric: true, label: "Ocjena", disablePadding: false },
-  { id: "color", numeric: false, label: "Boja", disablePadding: false },
-  {
-    id: "manufacturer",
-    numeric: false,
-    label: "Proizvođač",
-    disablePadding: false,
-  },
-];
-
 function BeerView(beer) {
   this.id = beer._id;
   this.name = beer.name;
@@ -37,6 +13,7 @@ function BeerView(beer) {
   this.color = beer.color;
   this.rating = beer.rating;
   this.manufacturer = beer.manufacturer.name;
+  this.isLiked = beer.isLiked;
 }
 
 export default function BeerList() {
@@ -44,6 +21,56 @@ export default function BeerList() {
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
   const { userSession } = useAuth();
+
+  const courseTableHeaderCells = [
+    { id: "name", numeric: false, label: "Naziv", disablePadding: false },
+    {
+      id: "alcoholPercentage",
+      numeric: true,
+      label: "Postotak alkohola",
+      disablePadding: false,
+    },
+    {
+      id: "averagePrice",
+      numeric: true,
+      label: "Prosječna cijena",
+      disablePadding: false,
+    },
+    { id: "rating", numeric: true, label: "Ocjena", disablePadding: false },
+    { id: "color", numeric: false, label: "Boja", disablePadding: false },
+    {
+      id: "manufacturer",
+      numeric: false,
+      label: "Proizvođač",
+      disablePadding: false,
+    },
+    {
+      id: "isLiked",
+      numeric: false,
+      label: "Sviđa mi se",
+      disablePadding: true,
+      isToggleButton: true,
+      toggleButtonFunction: async (beerIndex, beerId) => {
+        if (beerIndex === -1) return;
+
+        // const updatedBeers = [
+        //   ...beers.slice(0, beerIndex),
+        //   { ...beers[beerIndex], isLiked: !beers[beerIndex].isLiked },
+        //   ...beers.slice(beerIndex + 1),
+        // ];
+        // setBeers(updatedBeers);
+
+        const response = await beerService.likeBeerById(beerId);
+
+        const updatedBeers = [
+          ...beers.slice(0, beerIndex),
+          { ...beers[beerIndex], isLiked: response.isLiked },
+          ...beers.slice(beerIndex + 1),
+        ];
+        setBeers(updatedBeers);
+      },
+    },
+  ];
 
   useEffect(() => {
     const fetchData = async () => {

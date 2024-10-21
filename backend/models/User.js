@@ -12,6 +12,12 @@ const UserSchema = new Schema({
     enum: ["user", "admin"],
     default: "user",
   },
+  likedBeers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Beer",
+    },
+  ],
 });
 
 const User = mongoose.model("User", UserSchema);

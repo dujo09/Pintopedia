@@ -1,9 +1,21 @@
 import { ObjectId } from "mongodb";
 import Beer from "../models/Beer.js";
+import User from "../models/User.js";
 
-const getAllBeersDb = async function () {
-  const beers = await Beer.find({}).populate("manufacturer");
-  return beers;
+const getAllBeersForViewDb = async function (userId) {
+  const beers = await Beer.find({}).populate("manufacturer").lean();
+  const user = await User.findOne({ _id: userId }).lean();
+
+  const beersWithLikeStatus = beers.map((beer) => {
+    beer.isLiked =
+      user?.likedBeers && user.likedBeers.some(id => id.equals(beer._id));
+    return beer;
+  });
+
+  console.log(user.likedBeers);
+  console.log(beersWithLikeStatus.filter((item) => item.isLiked));
+
+  return beersWithLikeStatus;
 };
 
 const getBeerByIdDb = async function (id) {
@@ -37,7 +49,7 @@ const deleteBeerByIdDb = async function (id) {
 };
 
 export default {
-  getAllBeersDb,
+  getAllBeersForViewDb,
   getBeerByIdDb,
   updateBeerByIdDb,
   createBeerDb,

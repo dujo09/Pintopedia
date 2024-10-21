@@ -8,6 +8,9 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { visuallyHidden } from "@mui/utils";
 import React, { useEffect, useState, useMemo } from "react";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { IconButton } from "@mui/material";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 function getComparator(order, orderBy) {
   return order === "desc"
@@ -200,7 +203,23 @@ export default function SharedTable({
                       scope="row"
                       component="th"
                     >
-                      {String(row[headCell.id])}
+                      {headCell.isToggleButton ? (
+                        <IconButton
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            headCell.toggleButtonFunction(index, row.id);
+                          }}
+                          color="primary"
+                        >
+                          {row[headCell.id] ? (
+                            <FavoriteIcon />
+                          ) : (
+                            <FavoriteBorderIcon />
+                          )}
+                        </IconButton>
+                      ) : (
+                        String(row[headCell.id])
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>

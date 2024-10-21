@@ -6,7 +6,7 @@ const login = async function (req, res) {
   const username = req.body.username;
   const password = req.body.password;
   try {
-    const user = await userService.getUserByUsername(username);
+    const user = await userService.getUserByUsernameDb(username);
     if (!user)
       return res
         .status(404)
@@ -17,6 +17,7 @@ const login = async function (req, res) {
       return res.status(401).json({ message: "Error incorrect password" });
 
     const tokenPayload = {
+      id: user._id,
       username: user.username,
       role: user.role,
     };
@@ -28,6 +29,19 @@ const login = async function (req, res) {
   }
 };
 
+const likeBeerById = async function (req, res) {
+  const userId = res.locals.user.id;
+  const beerId = req.params.id;
+  try {
+    const isLiked = await userService.likeBeerByIdDb(userId, beerId);
+    return res.status(200).json({ isLiked });
+  } catch (err) {
+    console.log("Error during like beer by id: ", err);
+    return res.status(500).json({ message: "Error during like beer by id" });
+  }
+};
+
 export default {
   login,
+  likeBeerById,
 };

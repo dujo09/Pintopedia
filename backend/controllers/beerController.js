@@ -1,8 +1,9 @@
 import beerService from "../services/beerService.js";
 
-const getAllBeers = async function (req, res) {
+const getAllBeersForView = async function (req, res) {
+  const userId = res.locals.user.id;
   try {
-    const beers = await beerService.getAllBeersDb();
+    const beers = await beerService.getAllBeersForViewDb(userId);
     return res.status(200).json(beers);
   } catch (err) {
     console.log("Error getting all beers: ", err);
@@ -84,7 +85,7 @@ const deleteBeerById = async function (req, res) {
 };
 
 export default {
-  getAllBeers,
+  getAllBeersForView,
   getBeerById,
   updateBeerById,
   createBeer,
