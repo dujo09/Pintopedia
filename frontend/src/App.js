@@ -9,6 +9,8 @@ import { ProtectedRoute } from "./components/Shared/ProtectedRoute";
 import Login from "./components/Authentification/Login";
 import { useEffect } from "react";
 import { setupAxiosInterceptors } from "./axios/axiosSetup";
+import NavigationBar from "./components/NavigationBar/NavigationBar";
+import { CartProvider } from "./hooks/useCart";
 
 export const darkTheme = createTheme({
   palette: {
@@ -73,39 +75,42 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
 
-      <Routes>
-        <Route path="/login" element={<Login />} />
+      <CartProvider>
+        <NavigationBar />
 
-        <Route
-          path="/beers"
-          element={
-            <ProtectedRoute>
-              {" "}
-              <BeerList />{" "}
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/beers/:beerId"
-          element={
-            <ProtectedRoute>
-              {" "}
-              <BeerDetailsForm />{" "}
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/beers/create"
-          element={
-            <ProtectedRoute>
-              {" "}
-              <BeerDetailsForm />{" "}
-            </ProtectedRoute>
-          }
-        />
+        <Routes>
+          <Route path="/login" element={<Login />} />
 
-        <Route path="*" element={<Navigate to="/login" />} />
-      </Routes>
+          <Route
+            path="/beers"
+            element={
+              <ProtectedRoute>
+                <BeerList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/beers/:beerId"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <BeerDetailsForm />{" "}
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/beers/create"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <BeerDetailsForm />{" "}
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Routes>
+      </CartProvider>
     </ThemeProvider>
   );
 }

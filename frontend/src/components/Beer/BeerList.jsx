@@ -1,13 +1,16 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import SharedTable from "../Shared/SharedTable";
 import beerService from "./BeerService";
-import { Button, IconButton } from "@mui/material";
+import { Button, Drawer, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { debounce } from "lodash";
+import { useCart } from "../../hooks/useCart";
+import ShoppingCartItem from "../ShoppingCart/ShoppingCartItem";
+import ShoppingCart from "../ShoppingCart/ShoppingCart";
 
 function BeerView(beer) {
   this.id = beer._id;
@@ -25,6 +28,8 @@ export default function BeerList() {
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
   const { userSession } = useAuth();
+  const { cartItems, addItemQuantity, removeItemQuantity } = useCart();
+  const [open, setOpen] = useState(false);
 
   const debounceLikeMap = useRef(new Map());
   const courseTableHeaderCells = [
@@ -102,24 +107,6 @@ export default function BeerList() {
         );
       },
     },
-    {
-      disablePadding: true,
-      enableSort: false,
-      renderField: (fieldValue, beerId) => {
-        return (
-          <IconButton
-            onClick={(event) => {
-              event.stopPropagation();
-              handleClickDetails(beerId);
-            }}
-            color="primary"
-            variant="contained"
-          >
-            <OpenInNewIcon />
-          </IconButton>
-        );
-      },
-    },
   ];
 
   const likeBeer = async (beerId, isLiked) => {
@@ -174,8 +161,9 @@ export default function BeerList() {
     navigate("/beers/create");
   };
 
-  const handleClickDetails = (beerId) => {
-    navigate(`/beers/${beerId}`);
+  const handleClickDetails = () => {
+    if (!selectedItem) return;
+    navigate(`/beers/${selectedItem.id}`);
   };
 
   const handleClickDelete = async () => {
@@ -199,6 +187,20 @@ export default function BeerList() {
     }
   };
 
+  const handleClickAddToCart = () => {
+    if (!selectedItem) return;
+    addItemQuantity(selectedItem);
+  };
+
+  const handleClickRemoveFromCart = () => {
+    if (!selectedItem) return;
+    removeItemQuantity(selectedItem.id);
+  };
+
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
+
   return (
     <>
       {userSession.role === "admin" && (
@@ -207,13 +209,29 @@ export default function BeerList() {
         </Button>
       )}
 
-      {/* <Button
+      <Button
         variant="contained"
         onClick={handleClickDetails}
         disabled={!selectedItem}
       >
         Detalji
-      </Button> */}
+      </Button>
+
+      <Button
+        variant="contained"
+        onClick={handleClickAddToCart}
+        disabled={!selectedItem}
+      >
+        Dodaj u košaricu
+      </Button>
+
+      <Button
+        variant="contained"
+        onClick={handleClickRemoveFromCart}
+        disabled={!selectedItem}
+      >
+        Izbaci iz košarice
+      </Button>
 
       {userSession.role === "admin" && (
         <Button
