@@ -1,16 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import SharedTable from "../Shared/SharedTable";
 import beerService from "./BeerService";
-import { Button, Drawer, IconButton } from "@mui/material";
+import { Box, Button, Drawer, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { debounce } from "lodash";
 import { useCart } from "../../hooks/useCart";
-import ShoppingCartItem from "../ShoppingCart/ShoppingCartItem";
-import ShoppingCart from "../ShoppingCart/ShoppingCart";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 function BeerView(beer) {
   this.id = beer._id;
@@ -107,6 +105,30 @@ export default function BeerList() {
         );
       },
     },
+    {
+      id: "addToCart",
+      label: "U košaricu",
+      numeric: false,
+      disablePadding: true,
+      enableSort: false,
+      renderField: (value, beerId) => {
+        return (
+          <IconButton
+            onClick={async (event) => {
+              event.stopPropagation();
+
+              const beer = beers.find((item) => item.id === beerId);
+              if (!beer) return;
+
+              addItemQuantity(beer);
+            }}
+            color="primary"
+          >
+            <AddShoppingCartIcon />
+          </IconButton>
+        );
+      },
+    },
   ];
 
   const likeBeer = async (beerId, isLiked) => {
@@ -192,56 +214,65 @@ export default function BeerList() {
     addItemQuantity(selectedItem);
   };
 
-  const handleClickRemoveFromCart = () => {
-    if (!selectedItem) return;
-    removeItemQuantity(selectedItem.id);
-  };
-
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
-
   return (
-    <>
-      {userSession.role === "admin" && (
-        <Button variant="contained" onClick={handleClickCreate}>
-          Dodaj
-        </Button>
-      )}
+    <Box
+      sx={{
+        marginX: 5,
+        marginTop: 2,
+        display: "flex",
+        flexDirection: "column",
+        flex: "1 1 auto",
+        overflow: "hidden",
+      }}
+    >
+      <Typography variant="h5" component="div">
+        Pive
+      </Typography>
 
-      <Button
-        variant="contained"
-        onClick={handleClickDetails}
-        disabled={!selectedItem}
+      <Box
+        sx={{
+          marginBottom: 2,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+        }}
       >
-        Detalji
-      </Button>
+        {userSession.role === "admin" && (
+          <Button sx={{ marginLeft: ".25rem" }} variant="contained" color="primary" onClick={handleClickCreate}>
+            Dodaj
+          </Button>
+        )}
 
-      <Button
-        variant="contained"
-        onClick={handleClickAddToCart}
-        disabled={!selectedItem}
-      >
-        Dodaj u košaricu
-      </Button>
-
-      <Button
-        variant="contained"
-        onClick={handleClickRemoveFromCart}
-        disabled={!selectedItem}
-      >
-        Izbaci iz košarice
-      </Button>
-
-      {userSession.role === "admin" && (
         <Button
           variant="contained"
-          onClick={handleClickDelete}
-          disabled={userSession.role !== "admin" || !selectedItem}
+          color="secondary"
+          onClick={handleClickDetails}
+          disabled={!selectedItem}
+          sx={{ marginLeft: ".25rem" }}
         >
-          Ukloni
+          Detalji
         </Button>
-      )}
+
+        {/* <Button
+          variant="action"
+          onClick={handleClickAddToCart}
+          disabled={!selectedItem}
+        >
+          Dodaj u košaricu
+        </Button>
+ */}
+        {userSession.role === "admin" && (
+          <Button
+            variant="contained"
+            sx={{ marginLeft: ".25rem" }}
+            color="error"
+            onClick={handleClickDelete}
+            disabled={userSession.role !== "admin" || !selectedItem}
+          >
+            Ukloni
+          </Button>
+        )}
+      </Box>
 
       <SharedTable
         headCells={courseTableHeaderCells}
@@ -249,6 +280,6 @@ export default function BeerList() {
         onRowSelect={handleRowSelect}
         selectedItem={selectedItem}
       />
-    </>
+    </Box>
   );
 }

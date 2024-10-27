@@ -20,12 +20,14 @@ export const useLocalStorage = (keyName, defaultValue) => {
       valueOrCallback instanceof Function
         ? valueOrCallback(storedValue)
         : valueOrCallback;
+
+    setStoredValue(newValue);
+
     try {
       window.localStorage.setItem(keyName, JSON.stringify(newValue));
     } catch (err) {
       console.log(err);
     }
-    setStoredValue(newValue);
   };
 
   return [storedValue, setValue];

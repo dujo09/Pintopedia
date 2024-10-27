@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
-import yellowImage from "../../static/images/Solid_yellow.png";
+import yellowImage from "../../static/images/Solid_yellow.jpg";
 import {
   Button,
   FilledInput,
@@ -34,7 +34,7 @@ export default function ShoppingCartItem({
   return (
     <Card
       sx={{
-        minWidth: 500,
+        minWidth: "30vw",
         display: "flex",
         flexDirection: "row",
         width: "100%",
@@ -43,7 +43,12 @@ export default function ShoppingCartItem({
       <CardMedia sx={{ width: 151 }} image={yellowImage} />
 
       <CardContent
-        sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flex: "1 1 auto",
+          overflow: "none",
+        }}
       >
         <Typography color="textSecondary" gutterBottom>
           {manufacturer}
@@ -87,83 +92,5 @@ export default function ShoppingCartItem({
         </Box>
       </CardContent>
     </Card>
-
-    //   <CardContent sx={{flex: "1 0 auto"}}>
-    //     <Typography variant="div" component="h2" gutterBottom>
-    //       {name}
-    //     </Typography>
-
-    //     <Grid2 container>
-    //     <Grid2 item size={{xs: 9}}>
-    //       <Typography
-    //           variant="body1"
-    //           component="div"
-    //           style={{ fontWeight: "bold" }}
-    //         >
-    //           Price
-    //         </Typography>
-    //       </Grid2>
-    //       <Grid2 item size={{xs: 3}}>
-    //       <Typography variant="h6" component="div" color="secondary">
-    //           $100
-    //         </Typography>
-    //       </Grid2>
-
-    //       <Grid2 item size={{xs: 3}}>
-    //         <IconButton variant="contained"><RemoveIcon /></IconButton>
-    //       </Grid2>
-    //       <Grid2 item size={{xs: 6}}>
-    //         <Typography variant="h6">
-    //           {quantity}
-    //         </Typography>
-    //       </Grid2>
-    //       <Grid2 item size={{xs: 3}}>
-    //         <IconButton variant="contained"><AddIcon /></IconButton>
-    //       </Grid2>
-    //     </Grid2>
-    //   </CardContent>
-    // </Card>
-
-    // <Card sx={{display: "flex", marginTop: 5}}>
-    //   <CardMedia
-    //     sx={{width: 151}}
-    //     image={yellowImage}
-    //     title="Live from space album cover"
-    //   />
-    //   <CardContent sx={{flex: "1 0 auto"}}>
-    //     <Typography variant="div" component="h2" gutterBottom>
-    //       {name}
-    //     </Typography>
-
-    //     <Grid2 container>
-    //     <Grid2 item size={{xs: 9}}>
-    //       <Typography
-    //           variant="body1"
-    //           component="div"
-    //           style={{ fontWeight: "bold" }}
-    //         >
-    //           Price
-    //         </Typography>
-    //       </Grid2>
-    //       <Grid2 item size={{xs: 3}}>
-    //       <Typography variant="h6" component="div" color="secondary">
-    //           $100
-    //         </Typography>
-    //       </Grid2>
-
-    //       <Grid2 item size={{xs: 3}}>
-    //         <IconButton variant="contained"><RemoveIcon /></IconButton>
-    //       </Grid2>
-    //       <Grid2 item size={{xs: 6}}>
-    //         <Typography variant="h6">
-    //           {quantity}
-    //         </Typography>
-    //       </Grid2>
-    //       <Grid2 item size={{xs: 3}}>
-    //         <IconButton variant="contained"><AddIcon /></IconButton>
-    //       </Grid2>
-    //     </Grid2>
-    //   </CardContent>
-    // </Card>
   );
 }

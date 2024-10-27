@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const login = async (data) => {
+    console.log("Setting into local storage: " + data.token);
     setUserSession(data);
     navigate("/beers");
   };

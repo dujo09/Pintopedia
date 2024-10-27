@@ -9,6 +9,7 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import { visuallyHidden } from "@mui/utils";
 import React, { useEffect, useState, useMemo } from "react";
 import { IconButton } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 function getComparator(order, orderBy) {
   return order === "desc"
@@ -51,7 +52,7 @@ function EnhancedTableHead(props) {
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            {headCell.enableSort && (
+            {headCell.enableSort ? (
               <TableSortLabel
                 active={orderBy === headCell.id}
                 direction={orderBy === headCell.id ? order : "asc"}
@@ -66,6 +67,8 @@ function EnhancedTableHead(props) {
                   </Box>
                 ) : null}
               </TableSortLabel>
+            ) : (
+              <>{headCell.label}</>
             )}
           </TableCell>
         ))}
@@ -87,6 +90,7 @@ export default function SharedTable({
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(25);
   const [columnWidths, setColumnWidths] = useState({});
+  const theme = useTheme();
 
   function calculateColumnWidths(rows) {
     const maxWidth = 500;
@@ -173,8 +177,27 @@ export default function SharedTable({
 
   return (
     <>
-      <div className="shared-table-container">
-        <Table aria-labelledby="tableTitle" size={dense ? "small" : "medium"}>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          flex: "1 1 auto",
+          overflow: "auto",
+          "&::-webkit-scrollbar": {
+            width: "0.4em",
+            height: "0.4em",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: theme.palette.background.lighter,
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: theme.palette.primary.main,
+            borderRadius: "2px",
+          },
+        }}
+      >
+        <Table size={dense ? "small" : "medium"}>
           <EnhancedTableHead
             headCells={headCells}
             order={order}
@@ -186,7 +209,6 @@ export default function SharedTable({
           <TableBody>
             {visibleRows.map((row, index) => {
               const isItemSelected = isSelected(row.id);
-              // const labelId = enhanced - table - checkbox - ${index};
               return (
                 <TableRow
                   hover
@@ -224,18 +246,20 @@ export default function SharedTable({
             )}
           </TableBody>
         </Table>
-      </div>
+      </Box>
 
-      <TablePagination
-        className="shared-table-pagination"
-        rowsPerPageOptions={[5, 10, 25, 50, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      <Box sx={{ display: "flex", flexDirection: "column", flex: "0 0 auto" }}>
+        <TablePagination
+          className="shared-table-pagination"
+          rowsPerPageOptions={[5, 10, 25, 50, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Box>
     </>
   );
 }
