@@ -61,7 +61,12 @@ export default function ShoppingCart() {
       </Box>
 
       <Box
-        sx={{ marginRight: 3, display: "flex", flexDirection: "column", flex: "1, 1, auto" }}
+        sx={{
+          marginRight: 3,
+          display: "flex",
+          flexDirection: "column",
+          flex: "1, 1, auto",
+        }}
       >
         {cartItems.map((cartItem) => (
           <ShoppingCartItem

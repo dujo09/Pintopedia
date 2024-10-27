@@ -44,7 +44,7 @@ export default function NavigationBar() {
   };
 
   return (
-    <Box sx={{display: "flex", flexDirection: "row", flex: "0, 0, auto"}}>
+    <Box sx={{ display: "flex", flexDirection: "row", flex: "0, 0, auto" }}>
       <Drawer anchor={"right"} open={open} onClose={toggleDrawer(false)}>
         <ShoppingCart />
       </Drawer>

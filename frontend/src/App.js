@@ -38,26 +38,62 @@ export const darkTheme = createTheme({
   },
 
   // components: {
-  //   MuiButton: {
+  //   input: {
+  //     "& input.Mui-disabled": {
+  //       color: "green"
+  //     }
+  //   },
+
+  //   MuiOutlinedInput: {
   //     styleOverrides: {
   //       root: {
-  //         variants: [
-  //           {
-  //             props: (props) => props.variant === "action",
-  //             style: {
-  //               borderRadius: ".40rem",
-  //               marginLeft: ".25rem",
-  //               background: "#c7781f",
-  //             },
-  //           },
-  //           {
-  //             props: (props) => props.variant === "action" && props.disabled,
-  //             style: {
-  //               background: "#ffffff1f",
-  //             },
-  //           },
-            
-  //         ],
+  //         "&.Mui-disabled": {
+  //           color: "red",
+  //           "&::-webkit-text-fill-color": "red",
+  //         },
+
+  //       "&::-webkit-text-fill-color": "red",
+  //       color: "red",
+  //         // variants: [
+  //         //   {
+  //         //     props: (props) => props.disabled,
+  //         //     style: {
+  //         //       color: "red"
+  //         //     },
+  //         //   },
+  //         // ],
+  //       },
+  //       // notchedOutline: {
+  //       //   variants: [
+  //       //     {
+  //       //       props: (props) => props.disabled,
+  //       //       style: {
+  //       //         border: "none"
+  //       //       },
+  //       //     },
+  //       //   ],
+  //       // }
+  //     },
+  //   },
+  //   MuiInputBase: {
+  //     styleOverrides: {
+  //       root: {
+  //         "&.Mui-disabled": {
+  //           color: "red",
+  //           "&::-webkit-text-fill-color": "red",
+  //         },
+
+  //     "&::-webkit-text-fill-color": "red",
+  //     color: "red",
+  //         // variants: [
+  //         //   {
+  //         //     props: (props) => props.disabled,
+  //         //     style: {
+  //         //       color: "red"
+  //         //     },
+  //         //   },
+
+  //         // ],
   //       },
   //     },
   //   },

@@ -8,7 +8,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { debounce } from "lodash";
 import { useCart } from "../../hooks/useCart";
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 function BeerView(beer) {
   this.id = beer._id;
@@ -209,11 +209,6 @@ export default function BeerList() {
     }
   };
 
-  const handleClickAddToCart = () => {
-    if (!selectedItem) return;
-    addItemQuantity(selectedItem);
-  };
-
   return (
     <Box
       sx={{
@@ -238,7 +233,12 @@ export default function BeerList() {
         }}
       >
         {userSession.role === "admin" && (
-          <Button sx={{ marginLeft: ".25rem" }} variant="contained" color="primary" onClick={handleClickCreate}>
+          <Button
+            sx={{ marginLeft: ".25rem" }}
+            variant="contained"
+            color="primary"
+            onClick={handleClickCreate}
+          >
             Dodaj
           </Button>
         )}
@@ -253,14 +253,6 @@ export default function BeerList() {
           Detalji
         </Button>
 
-        {/* <Button
-          variant="action"
-          onClick={handleClickAddToCart}
-          disabled={!selectedItem}
-        >
-          Dodaj u košaricu
-        </Button>
- */}
         {userSession.role === "admin" && (
           <Button
             variant="contained"
