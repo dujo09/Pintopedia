@@ -3,7 +3,7 @@ import "./axios/axiosSetup";
 import BeerList from "./components/Beer/BeerList";
 import { Box, Container, createTheme, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
-import BeerDetailsForm from "./components/Beer/beerDetailsForm";
+import BeerDetailsForm from "./components/Beer/BeerDetailsForm";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
 import { ProtectedRoute } from "./components/Shared/ProtectedRoute";
 import Login from "./components/Authentification/Login";
