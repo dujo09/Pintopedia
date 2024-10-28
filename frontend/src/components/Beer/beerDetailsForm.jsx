@@ -108,7 +108,7 @@ export default function BeerDetailsForm() {
     <Box
       sx={{
         overflowX: "hidden",
-        overflowY: "auto",
+        overflowY: "scroll",
         "&::-webkit-scrollbar": {
           width: "0.4em",
           height: "0.4em",
@@ -132,7 +132,7 @@ export default function BeerDetailsForm() {
           spacing={3}
         >
           <Grid2 size={{ xs: 12, md: 11 }}>
-            <Typography variant="h4">{beerData.name}</Typography>
+            <Typography variant="h4">Detalji - {beerData.name}</Typography>
           </Grid2>
 
           <Grid2 size={{ xs: 12, md: 1 }}>
@@ -230,20 +230,23 @@ export default function BeerDetailsForm() {
           container
           spacing={3}
         >
-
           <Grid2 size={{ xs: 12, md: 11 }}>
+            <Typography variant="h4">Uređivanje - {beerData.name}</Typography>
           </Grid2>
 
           <Grid2 size={{ xs: 12, md: 1 }}>
-          <Button
-                fullWidth
-                variant="contained"
-                onClick={() => {formik.resetForm(); setViewMode(true)}}
-              >
-                Odustani
-              </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={() => {
+                formik.resetForm();
+                setViewMode(true);
+              }}
+            >
+              Odustani
+            </Button>
           </Grid2>
-          
+
           <Grid2
             sx={{
               marginX: "auto",
