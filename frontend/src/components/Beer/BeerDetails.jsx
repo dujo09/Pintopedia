@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Divider, Typography } from "@mui/material";
+import { Divider, Rating, Typography } from "@mui/material";
 
 export default function BeerDetails({ beerData, manufacturerData }) {
   const theme = useTheme();
@@ -37,9 +37,15 @@ export default function BeerDetails({ beerData, manufacturerData }) {
       <Divider />
 
       <Typography style={{ fontWeight: "bold" }} variant="h5">
-        Ocjena
+        Prosječna ocjena
       </Typography>
-      <Typography variant="h6">{beerData.rating}</Typography>
+      <Rating value={beerData.averageRating || 0} precision={0.5} readOnly />
+      <Divider />
+
+      <Typography style={{ fontWeight: "bold" }} variant="h5">
+        Osobna ocjena
+      </Typography>
+      <Rating value={beerData.userRating || 0} precision={0.5} readOnly />
     </>
   );
 }

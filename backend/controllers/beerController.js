@@ -13,10 +13,10 @@ const getAllBeersForView = async function (req, res) {
 
 const getBeerById = async function (req, res) {
   const id = req.params.id;
-  console.log("id", id);
+  const userId = res.locals.user.id;
+
   try {
-    const beer = await beerService.getBeerByIdDb(id);
-    console.log("beer", beer);
+    const beer = await beerService.getBeerByIdDb(id, userId);
     if (!beer) return res.status(404).json({ message: "Error Beer not found" });
 
     return res.status(200).json(beer);
