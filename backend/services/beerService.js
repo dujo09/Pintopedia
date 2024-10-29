@@ -3,19 +3,56 @@ import Beer from "../models/Beer.js";
 import User from "../models/User.js";
 
 const getAllBeersForViewDb = async function (userId) {
-  const beers = await Beer.find({}).populate("manufacturer").lean();
-  const user = await User.findOne({ _id: userId }).lean();
+  const beers = await Beer.aggregate([
+    {
+      $addFields: {
+        averageRating: {
+          $cond: {
+            if: { $gt: [{ $size: "$userRatings" }, 0] },
+            then: { $avg: "$userRatings.rating" },
+            else: 0,
+          },
+        },
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        let: { beerId: "$_id" },
+        pipeline: [
+          { $match: { _id: userId } },
+          { $project: { isLiked: { $in: ["$$beerId", "$likedBeers"] } } },
+        ],
+        as: "userLikedStatus",
+      },
+    },
+    {
+      $addFields: {
+        isLiked: { $arrayElemAt: ["$userLikedStatus.isLiked", 0] },
+      },
+    },
+    {
+      $lookup: {
+        from: "manufacturers",
+        localField: "manufacturer",
+        foreignField: "_id",
+        as: "manufacturerDetails",
+      },
+    },
+    {
+      $addFields: {
+        manufacturerName: { $arrayElemAt: ["$manufacturerDetails.name", 0] },
+      },
+    },
+    {
+      $project: {
+        userRatings: 0,
+        userLikedStatus: 0,
+      },
+    },
+  ]);
 
-  const beersWithLikeStatus = beers.map((beer) => {
-    beer.isLiked =
-      user?.likedBeers && user.likedBeers.some((id) => id.equals(beer._id));
-    return beer;
-  });
-
-  console.log(user.likedBeers);
-  console.log(beersWithLikeStatus.filter((item) => item.isLiked));
-
-  return beersWithLikeStatus;
+  return beers;
 };
 
 const getBeerByIdDb = async function (id) {

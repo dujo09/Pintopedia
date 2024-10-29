@@ -1,11 +1,5 @@
 import { useTheme } from "@emotion/react";
-import {
-  Box,
-  Button,
-  Divider,
-  Grid2,
-  Typography
-} from "@mui/material";
+import { Box, Button, Divider, Grid2, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";

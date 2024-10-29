@@ -13,9 +13,6 @@ const BeerSchema = new Schema({
   averagePrice: {
     type: String,
   },
-  rating: {
-    type: Number,
-  },
   flavorDescription: {
     type: String,
   },
@@ -23,6 +20,16 @@ const BeerSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Manufacturer",
   },
+  userRatings: [
+    {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+      rating: { type: Number, required: true, min: 1, max: 5 },
+    },
+  ],
 });
 
 const Beer = mongoose.model("Beer", BeerSchema);

@@ -1,7 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import SharedTable from "../Shared/SharedTable";
 import beerService from "./BeerService";
-import { Box, Button, Drawer, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Drawer,
+  IconButton,
+  Rating,
+  Typography,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -16,8 +23,8 @@ function BeerView(beer) {
   this.alcoholPercentage = beer.alcoholPercentage;
   this.averagePrice = beer.averagePrice;
   this.color = beer.color;
-  this.rating = beer.rating;
-  this.manufacturer = beer.manufacturer.name;
+  this.averageRating = beer.averageRating;
+  this.manufacturerName = beer.manufacturerName;
   this.isLiked = beer.isLiked;
 }
 
@@ -53,11 +60,14 @@ export default function BeerList() {
       enableSort: true,
     },
     {
-      id: "rating",
+      id: "averageRating",
+      label: "Prosječna ocjena",
       numeric: true,
-      label: "Ocjena",
       disablePadding: false,
       enableSort: true,
+      renderField: (value, beerId) => {
+        return <Rating value={value} precision={0.5} readOnly />;
+      },
     },
     {
       id: "color",
@@ -67,7 +77,7 @@ export default function BeerList() {
       enableSort: true,
     },
     {
-      id: "manufacturer",
+      id: "manufacturerName",
       numeric: false,
       label: "Proizvođač",
       disablePadding: false,
