@@ -8,13 +8,13 @@ const beerRouter = express.Router();
 
 beerRouter.get("/", authenticateToken, beerController.getAllBeersForView);
 beerRouter.get(
-  "/:id",
+  "/:beerId",
   authenticateToken,
   validateDataMiddleware(beerSchemas.getBeerById),
   beerController.getBeerById,
 );
 beerRouter.put(
-  "/:id",
+  "/:beerId",
   authenticateToken,
   validateDataMiddleware(beerSchemas.updateBeerById),
   beerController.updateBeerById,
@@ -26,10 +26,16 @@ beerRouter.post(
   beerController.createBeer,
 );
 beerRouter.delete(
-  "/:id",
+  "/:beerId",
   authenticateToken,
   validateDataMiddleware(beerSchemas.deleteBeerById),
   beerController.deleteBeerById,
+);
+beerRouter.put(
+  "/rate/:beerId",
+  authenticateToken,
+  validateDataMiddleware(beerSchemas.rateBeerById),
+  beerController.rateBeerById,
 );
 
 export default beerRouter;

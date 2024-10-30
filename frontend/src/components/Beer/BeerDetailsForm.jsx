@@ -1,12 +1,13 @@
 import { useTheme } from "@emotion/react";
 import { Box, Button, Divider, Grid2, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import yellowImage from "../../static/images/Solid_yellow.jpg";
 import BeerDetails from "./BeerDetails";
 import BeerForm from "./BeerForm";
 import beerService from "./BeerService";
+import { debounce } from "lodash";
 
 export default function BeerDetailsForm() {
   const { beerId } = useParams();
@@ -15,6 +16,39 @@ export default function BeerDetailsForm() {
   const [isViewMode, setViewMode] = useState(!!beerId);
   const { userSession } = useAuth();
   const theme = useTheme();
+
+  const handleRateBeer = function (beerId, rating) {
+    setBeerData((prevBeerData) => {
+      return { ...prevBeerData, userRating: rating };
+    });
+    debouncedRateBeer(beerId, rating);
+  };
+
+  const debouncedRateBeer = useCallback(
+    debounce((beerId, rating) => {
+      rateBeer(beerId, rating);
+    }, 500),
+    [],
+  );
+
+  const rateBeer = async function (beerId, rating) {
+    try {
+      const { userRating, averageRating } = await beerService.rateBeerById(
+        beerId,
+        rating,
+      );
+
+      setBeerData((prevBeerData) => {
+        return {
+          ...prevBeerData,
+          userRating: userRating,
+          averageRating: averageRating,
+        };
+      });
+    } catch (error) {
+      console.log("Error rating Beer: ", error);
+    }
+  };
 
   const handleSubmit = async function (values) {
     if (beerId) updateBeer(values);
@@ -141,7 +175,7 @@ export default function BeerDetailsForm() {
           }}
           size={{ xs: 12, md: 6 }}
         >
-          <img
+          {/* <img
             style={{
               display: "block",
               maxWidth: "100%",
@@ -151,7 +185,7 @@ export default function BeerDetailsForm() {
             }}
             alt=""
             src={yellowImage}
-          />
+          /> */}
         </Grid2>
 
         <Grid2 size={{ xs: 12, md: 6 }}>
@@ -161,6 +195,7 @@ export default function BeerDetailsForm() {
               manufacturerData={manufacturers.find(
                 (item) => item.id === beerData.manufacturer,
               )}
+              handleRateBeer={handleRateBeer}
             />
           ) : (
             <BeerForm

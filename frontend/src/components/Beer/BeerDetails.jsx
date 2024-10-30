@@ -1,9 +1,11 @@
 import { useTheme } from "@emotion/react";
 import { Divider, Rating, Typography } from "@mui/material";
 
-export default function BeerDetails({ beerData, manufacturerData }) {
-  const theme = useTheme();
-
+export default function BeerDetails({
+  beerData,
+  manufacturerData,
+  handleRateBeer,
+}) {
   return (
     <>
       <Typography style={{ fontWeight: "bold" }} variant="h5">
@@ -45,7 +47,11 @@ export default function BeerDetails({ beerData, manufacturerData }) {
       <Typography style={{ fontWeight: "bold" }} variant="h5">
         Osobna ocjena
       </Typography>
-      <Rating value={beerData.userRating || 0} precision={0.5} readOnly />
+      <Rating
+        value={Number(beerData.userRating) || 0}
+        precision={0.5}
+        onChange={(e) => handleRateBeer(beerData._id, e.target.value)}
+      />
     </>
   );
 }

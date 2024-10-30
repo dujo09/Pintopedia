@@ -2,23 +2,31 @@ import Joi from "joi";
 
 const getBeerById = Joi.object({
   params: Joi.object({
-    id: Joi.string().required(),
+    beerId: Joi.string().required(),
   }),
   body: Joi.object(),
 });
 
 const updateBeerById = Joi.object({
   params: Joi.object({
-    id: Joi.string().required(),
+    beerId: Joi.string().required(),
   }),
   body: Joi.object({
-    name: Joi.string(),
-    alcoholPercentage: Joi.number(),
-    color: Joi.string(),
-    averagePrice: Joi.string(),
-    rating: Joi.number().min(1).max(5),
-    flavorDescription: Joi.string(),
-    manufacturer: Joi.string(),
+    name: Joi.string().required(),
+    alcoholPercentage: Joi.number().required(),
+    color: Joi.string().required(),
+    averagePrice: Joi.string().required(),
+    flavorDescription: Joi.string().required(),
+    manufacturer: Joi.string().required(),
+  }),
+});
+
+const rateBeerById = Joi.object({
+  params: Joi.object({
+    beerId: Joi.string().required(),
+  }),
+  body: Joi.object({
+    rating: Joi.number().min(0).max(5).required(),
   }),
 });
 
@@ -28,8 +36,7 @@ const createBeer = Joi.object({
     name: Joi.string().required(),
     alcoholPercentage: Joi.number().required(),
     color: Joi.string().required(),
-    averagePrice: Joi.string().required(),
-    rating: Joi.number().min(1).max(5).required(),
+    averagePrice: Joi.number().required(),
     flavorDescription: Joi.string().required(),
     manufacturer: Joi.string().required(),
   }),
@@ -37,9 +44,15 @@ const createBeer = Joi.object({
 
 const deleteBeerById = Joi.object({
   params: Joi.object({
-    id: Joi.string().required(),
+    beerId: Joi.string().required(),
   }),
   body: Joi.object(),
 });
 
-export default { getBeerById, updateBeerById, createBeer, deleteBeerById };
+export default {
+  getBeerById,
+  updateBeerById,
+  createBeer,
+  deleteBeerById,
+  rateBeerById,
+};

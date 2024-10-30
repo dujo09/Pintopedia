@@ -27,7 +27,7 @@ const BeerSchema = new Schema({
         ref: "User",
         required: true,
       },
-      rating: { type: Number, required: true, min: 1, max: 5 },
+      rating: { type: Number, required: true, min: 0, max: 5 },
     },
   ],
 });

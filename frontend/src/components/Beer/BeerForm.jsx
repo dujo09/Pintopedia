@@ -16,7 +16,6 @@ const validationSchema = yup.object({
   alcoholPercentage: yup.string("Unesi polje").required("Polje je obavezno"),
   color: yup.string("Unesi polje").required("Polje je obavezno"),
   averagePrice: yup.string("Unesi polje").required("Polje je obavezno"),
-  rating: yup.string("Unesi polje").required("Polje je obavezno"),
   flavorDescription: yup.string("Unesi polje").required("Polje je obavezno"),
   manufacturer: yup.string("Unesi polje").required("Polje je obavezno"),
 });
@@ -29,7 +28,6 @@ export default function BeerForm({ beerData, manufacturers, handleSubmit }) {
       alcoholPercentage: beerData.alcoholPercentage || "",
       color: beerData.color || "",
       averagePrice: beerData.averagePrice || "",
-      rating: beerData.rating || "",
       flavorDescription: beerData.flavorDescription || "",
       manufacturer: beerData.manufacturer || "",
     },
@@ -118,23 +116,6 @@ export default function BeerForm({ beerData, manufacturers, handleSubmit }) {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           helperText={formik.touched.averagePrice && formik.errors.averagePrice}
-        />
-      </FormControl>
-      <FormControl
-        required
-        fullWidth
-        error={formik.touched.rating && Boolean(formik.errors.rating)}
-        margin="normal"
-      >
-        <FormLabel htmlFor="rating">Ocjena</FormLabel>
-        <OutlinedInput
-          name="rating"
-          type="number"
-          id="rating"
-          value={formik.values.rating}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          helperText={formik.touched.rating && formik.errors.rating}
         />
       </FormControl>
       <FormControl
