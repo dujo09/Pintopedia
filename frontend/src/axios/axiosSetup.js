@@ -1,8 +1,8 @@
 import axios from "axios";
 
-// axios.defaults.baseURL = "http://localhost:5000/public/api/";
-axios.defaults.baseURL =
-  "https://potential-invention-p5x9gvpwgv6frjjx-5000.app.github.dev/public/api/";
+axios.defaults.baseURL = "http://localhost:5000/public/api/";
+// axios.defaults.baseURL =
+//   "https://potential-invention-p5x9gvpwgv6frjjx-5000.app.github.dev/public/api/";
 
 export const setupAxiosInterceptors = (getToken, logout) => {
   axios.interceptors.request.use(

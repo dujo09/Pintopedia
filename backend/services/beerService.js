@@ -51,7 +51,7 @@ const getAllBeersForViewDb = async function (userId) {
         },
       },
     ]);
-  
+
     return beers;
   } catch (err) {
     throw new Error(err.message);
@@ -60,8 +60,9 @@ const getAllBeersForViewDb = async function (userId) {
 
 const getBeerByIdDb = async function (beerId, userId) {
   try {
-    if (!ObjectId.isValid(beerId)) throw new Error("beerId not valid ObjectId type");
-    
+    if (!ObjectId.isValid(beerId))
+      throw new Error("beerId not valid ObjectId type");
+
     const beer = await Beer.aggregate([
       {
         $match: { _id: new ObjectId(beerId) },
@@ -102,7 +103,7 @@ const getBeerByIdDb = async function (beerId, userId) {
         $project: { userRatings: 0 },
       },
     ]);
-  
+
     return beer[0];
   } catch (err) {
     throw new Error(err.message);
@@ -244,8 +245,8 @@ const createBeerDb = async function (beerData) {
 
 const deleteBeerByIdDb = async function (beerId) {
   try {
-  if (!ObjectId.isValid(beerId)) 
-    throw new Error("beerId not valid ObjectId type");
+    if (!ObjectId.isValid(beerId))
+      throw new Error("beerId not valid ObjectId type");
 
     const result = await Beer.deleteOne({ _id: beerId });
     return result.deletedCount;

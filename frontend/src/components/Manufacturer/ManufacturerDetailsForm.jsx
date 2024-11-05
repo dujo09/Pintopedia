@@ -3,96 +3,58 @@ import { Box, Button, Divider, Grid2, Typography } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import yellowImage from "../../static/images/Solid_yellow.jpg";
-import BeerDetails from "./BeerDetails";
-import BeerForm from "./BeerForm";
-import beerService from "./BeerService";
-import { debounce } from "lodash";
+import genericBeerImage from "../../static/images/generic_beer.jpg";
+import ManufacturerForm from "./ManufacturerForm";
+import manufacturerService from "./ManufacturerService";
+import ManufacturerDetails from "./ManufacturerDetails";
 
-export default function BeerDetailsForm() {
-  const { beerId } = useParams();
-  const [beerData, setBeerData] = useState({});
-  const [manufacturers, setManufacturers] = useState([]);
-  const [isViewMode, setViewMode] = useState(!!beerId);
+export default function ManufacturerDetailsForm() {
+  const { manufacturerId } = useParams();
+  const [manufacturerData, setManufacturerData] = useState({});
+  const [isViewMode, setViewMode] = useState(!!manufacturerId);
   const { userSession } = useAuth();
   const theme = useTheme();
 
-  const handleRateBeer = function (beerId, rating) {
-    setBeerData((prevBeerData) => {
-      return { ...prevBeerData, userRating: rating };
-    });
-    debouncedRateBeer(beerId, rating);
-  };
-
-  const debouncedRateBeer = useCallback(
-    debounce((beerId, rating) => {
-      rateBeer(beerId, rating);
-    }, 500),
-    [],
-  );
-
-  const rateBeer = async function (beerId, rating) {
-    try {
-      const { userRating, averageRating } = await beerService.rateBeerById(
-        beerId,
-        rating,
-      );
-
-      setBeerData((prevBeerData) => {
-        return {
-          ...prevBeerData,
-          userRating: userRating,
-          averageRating: averageRating,
-        };
-      });
-    } catch (error) {
-      console.log("Error rating Beer: ", error);
-    }
-  };
-
   const handleSubmit = async function (values) {
-    if (beerId) updateBeer(values);
-    else createBeer(values);
+    if (manufacturerId) updatManufacturer(values);
+    else createManufacturer(values);
     setViewMode(true);
   };
 
-  async function updateBeer(values) {
+  async function updatManufacturer(values) {
     try {
-      const updatedBeerData = await beerService.updateBeerById(beerId, values);
-      setBeerData(updatedBeerData);
+      const updatedManufacturerData =
+        await manufacturerService.updateManufacturerById(
+          manufacturerId,
+          values,
+        );
+      setManufacturerData(updatedManufacturerData);
     } catch (err) {
-      console.log("Error updating Beer: ", err);
+      console.log("Error updating Manufacturer: ", err);
     }
   }
 
-  async function createBeer(values) {
+  async function createManufacturer(values) {
     try {
-      const createdBeerData = await beerService.createBeer(values);
-      setBeerData(createdBeerData);
+      const createdManufacturerData =
+        await manufacturerService.createManufacturer(values);
+      setManufacturerData(createdManufacturerData);
     } catch (err) {
-      console.log("Error creating Beer: ", err);
+      console.log("Error creating Manufacturer: ", err);
     }
   }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (beerId) {
-          const beerData = await beerService.getBeerById(beerId);
-          setBeerData(beerData);
+        if (manufacturerId) {
+          const manufacturerData =
+            await manufacturerService.getManufacturerById(manufacturerId);
+          console.log(manufacturerData);
+          setManufacturerData(manufacturerData);
         }
-
-        const manufacturers =
-          await beerService.getAllManufacturersForDropdown();
-        const manufacturersData = manufacturers.map((manufacturer) => {
-          return {
-            id: manufacturer._id,
-            name: manufacturer.name,
-          };
-        });
-        setManufacturers(manufacturersData);
       } catch (err) {
-        console.log("Error getting beer data: ", err);
+        console.log("Error getting manufacturer data: ", err);
       }
     };
 
@@ -127,7 +89,9 @@ export default function BeerDetailsForm() {
       >
         <Grid2 size={{ xs: 12, md: 11 }}>
           {isViewMode ? (
-            <Typography variant="h4">Detalji - {beerData.name}</Typography>
+            <Typography variant="h4">
+              Detalji - {manufacturerData.name}
+            </Typography>
           ) : (
             <Typography variant="h4">Uređivanje</Typography>
           )}
@@ -184,23 +148,16 @@ export default function BeerDetailsForm() {
               height: "auto",
             }}
             alt=""
-            src={yellowImage}
+            src={genericBeerImage}
           />
         </Grid2>
 
         <Grid2 size={{ xs: 12, md: 6 }}>
           {isViewMode ? (
-            <BeerDetails
-              beerData={beerData}
-              manufacturerData={manufacturers.find(
-                (item) => item.id === beerData.manufacturer,
-              )}
-              handleRateBeer={handleRateBeer}
-            />
+            <ManufacturerDetails manufacturerData={manufacturerData} />
           ) : (
-            <BeerForm
-              beerData={beerData}
-              manufacturers={manufacturers}
+            <ManufacturerForm
+              manufacturerData={manufacturerData}
               handleSubmit={handleSubmit}
             />
           )}

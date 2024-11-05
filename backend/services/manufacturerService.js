@@ -2,26 +2,79 @@ import { ObjectId } from "mongodb";
 import Manufacturer from "../models/Manufacturer.js";
 
 const getAllManufacturersDb = async function () {
-  const manufacturers = await Manufacturer.find({});
-  return manufacturers;
+  try {
+    const manufacturers = await Manufacturer.find({});
+    return manufacturers;
+  } catch (err) {
+    throw new Error(err.message);
+  }
 };
 
-const getManufacturerByIdDb = async function (id) {
-  if (!ObjectId.isValid(id)) return null;
+const getManufacturerByIdDb = async function (manufacturerId) {
+  try {
+    if (!ObjectId.isValid(manufacturerId))
+      throw new Error("manufacturerId not valid ObjectId type");
 
-  const beer = await Manufacturer.findOne({ _id: id });
-  return beer;
+    const manufacturer = await Manufacturer.findOne({ _id: manufacturerId });
+    return manufacturer;
+  } catch (err) {
+    throw new Error(err.message);
+  }
 };
 
-const updateManufacturerByIdDb = async function (id, manufacturerData) {
-  if (!ObjectId.isValid(id)) return null;
+const updateManufacturerByIdDb = async function (
+  manufacturerId,
+  manufacturerData,
+) {
+  const { name, country, city, yearEstablished, website, description } =
+    manufacturerData;
 
-  let manufacturer = await Manufacturer.findOne({ _id: id });
-  Object.keys(manufacturerData).forEach((key) => {
-    manufacturer[key] = manufacturerData[key];
-  });
-  await manufacturer.save();
-  return manufacturer;
+  try {
+    if (!ObjectId.isValid(manufacturerId))
+      throw new Error("manufacturerId not valid ObjectId type");
+
+    const updatedManufacturer = await Manufacturer.findOneAndUpdate(
+      { _id: new ObjectId(manufacturerId) },
+      {
+        $set: {
+          name,
+          country,
+          city,
+          yearEstablished,
+          website,
+          description,
+        },
+      },
+      {
+        new: true,
+      },
+    ).lean();
+
+    if (!updatedManufacturer) return null;
+
+    return updatedManufacturer;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
+const createManufacturerDb = async function (manufacturerData) {
+  const { name, country, city, yearEstablished, website, description } =
+    manufacturerData;
+
+  try {
+    const manufacturer = await Manufacturer.create({
+      name,
+      country,
+      city,
+      yearEstablished,
+      website,
+      description,
+    });
+    return manufacturer;
+  } catch (err) {
+    throw new Error(err.message);
+  }
 };
 
 const deleteManufacturerByIdDb = async function (id) {
@@ -36,4 +89,5 @@ export default {
   getManufacturerByIdDb,
   updateManufacturerByIdDb,
   deleteManufacturerByIdDb,
+  createManufacturerDb,
 };

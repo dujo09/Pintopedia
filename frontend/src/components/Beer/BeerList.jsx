@@ -37,7 +37,7 @@ export default function BeerList() {
   const [open, setOpen] = useState(false);
 
   const debounceLikeMap = useRef(new Map());
-  const courseTableHeaderCells = [
+  const beersTableHeaderCells = [
     {
       id: "name",
       numeric: false,
@@ -277,7 +277,7 @@ export default function BeerList() {
       </Box>
 
       <SharedTable
-        headCells={courseTableHeaderCells}
+        headCells={beersTableHeaderCells}
         rows={beers}
         onRowSelect={handleRowSelect}
         selectedItem={selectedItem}

@@ -11,20 +11,26 @@ manufacturerRouter.get(
   authenticateToken,
   manufacturerController.getAllManufacturers,
 );
+manufacturerRouter.post(
+  "/",
+  authenticateToken,
+  validateDataMiddleware(manufacturersSchemas.createManufacturer),
+  manufacturerController.createManufacturer,
+);
 manufacturerRouter.get(
-  "/:id",
+  "/:manufacturerId",
   authenticateToken,
   validateDataMiddleware(manufacturersSchemas.getManufacturerById),
   manufacturerController.getManufacturerById,
 );
 manufacturerRouter.put(
-  "/:id",
+  "/:manufacturerId",
   authenticateToken,
   validateDataMiddleware(manufacturersSchemas.updateManufacturerById),
   manufacturerController.updateManufacturerById,
 );
 manufacturerRouter.delete(
-  "/:id",
+  "/:manufacturerId",
   authenticateToken,
   validateDataMiddleware(manufacturersSchemas.deleteManufacturerById),
   manufacturerController.deleteManufacturerById,

@@ -52,11 +52,12 @@ const rateBeerById = async function (req, res) {
   const userId = res.locals.user.id;
   try {
     const ratings = await beerService.rateBeerByIdDb(beerId, userId, rating);
-    if (!ratings) return res.status(404).json({ message: "Error Beer not found" });
+    if (!ratings)
+      return res.status(404).json({ message: "Error Beer not found" });
 
     return res.status(200).json(ratings);
   } catch (err) {
-    console.log("Error rating beer: " + err.message)
+    console.log("Error rating beer: " + err.message);
     return res.status(500).json({ message: "Error rating beer" });
   }
 };

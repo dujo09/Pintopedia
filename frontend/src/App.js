@@ -11,6 +11,8 @@ import { useEffect } from "react";
 import { setupAxiosInterceptors } from "./axios/axiosSetup";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import { CartProvider } from "./hooks/useCart";
+import ManufacturerList from "./components/Manufacturer/ManufacturerList";
+import ManufacturerDetailsForm from "./components/Manufacturer/ManufacturerDetailsForm";
 
 export const darkTheme = createTheme({
   palette: {
@@ -175,6 +177,31 @@ function App() {
                 <ProtectedRoute>
                   {" "}
                   <BeerDetailsForm />{" "}
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/manufacturers"
+              element={
+                <ProtectedRoute>
+                  <ManufacturerList />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/manufacturers/:manufacturerId"
+              element={
+                <ProtectedRoute>
+                  <ManufacturerDetailsForm />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/manufacturers/create"
+              element={
+                <ProtectedRoute>
+                  <ManufacturerDetailsForm />
                 </ProtectedRoute>
               }
             />

@@ -6,14 +6,15 @@ const getAllManufacturers = async function (req, res) {
     return res.status(200).json(manufacturers);
   } catch (err) {
     console.log("Error getting all Manufacturers: ", err);
-    return res.status(500).json({ message: "Error getting Manufacturers" });
+    return res.status(500).json({ message: "Error getting all Manufacturers" });
   }
 };
 
 const getManufacturerById = async function (req, res) {
-  const id = req.params.id;
+  const manufacturerId = req.params.manufacturerId;
   try {
-    const manufacturer = await manufacturerService.getManufacturerByIdDb(id);
+    const manufacturer =
+      await manufacturerService.getManufacturerByIdDb(manufacturerId);
     if (!manufacturer)
       return res.status(404).json({ message: "Error Manufacturer not found" });
 
@@ -25,7 +26,7 @@ const getManufacturerById = async function (req, res) {
 };
 
 const updateManufacturerById = async function (req, res) {
-  const id = req.params.id;
+  const manufacturerId = req.params.manufacturerId;
   const manufacturerData = req.body;
   const userRole = res.locals.user.role;
   try {
@@ -35,7 +36,7 @@ const updateManufacturerById = async function (req, res) {
         .json({ message: "Error User doesn't have permission" });
 
     const manufacturer = await manufacturerService.updateManufacturerByIdDb(
-      id,
+      manufacturerId,
       manufacturerData,
     );
     if (!manufacturer)
@@ -45,6 +46,25 @@ const updateManufacturerById = async function (req, res) {
   } catch (err) {
     console.log("Error updating Manufacturer: ", err);
     return res.status(500).json({ message: "Error updating Manufacturer" });
+  }
+};
+
+const createManufacturer = async function (req, res) {
+  const manufacturerData = req.body;
+  const userRole = res.locals.user.role;
+  try {
+    if (userRole !== "admin")
+      return res
+        .status(403)
+        .json({ message: "Error User doesn't have permission" });
+
+    const manufacturer =
+      await manufacturerService.createManufacturerDb(manufacturerData);
+
+    return res.status(200).json(manufacturer);
+  } catch (err) {
+    console.log("Error creating Manufacturer: ", err.message);
+    return res.status(500).json({ message: "Error creating Manufacturer" });
   }
 };
 
@@ -73,4 +93,5 @@ export default {
   getManufacturerById,
   updateManufacturerById,
   deleteManufacturerById,
+  createManufacturer,
 };
