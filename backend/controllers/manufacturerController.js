@@ -77,7 +77,8 @@ const deleteManufacturerById = async function (req, res) {
         .status(403)
         .json({ message: "Error User doesn't have permission" });
 
-    const deletedCount = await manufacturerService.deleteManufacturerByIdDb(manufacturerId);
+    const deletedCount =
+      await manufacturerService.deleteManufacturerByIdDb(manufacturerId);
     if (!deletedCount)
       return res.status(404).json({ message: "Error Manufacturer not found" });
 

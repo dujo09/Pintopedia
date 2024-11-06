@@ -13,6 +13,8 @@ import NavigationBar from "./components/NavigationBar/NavigationBar";
 import { CartProvider } from "./hooks/useCart";
 import ManufacturerList from "./components/Manufacturer/ManufacturerList";
 import ManufacturerDetailsForm from "./components/Manufacturer/ManufacturerDetailsForm";
+import UserDetails from "./components/User/UserDetails";
+import UserDetailsForm from "./components/User/UserDetailsForm";
 
 export const darkTheme = createTheme({
   palette: {
@@ -206,7 +208,16 @@ function App() {
               }
             />
 
-            {/* <Route path="*" element={<Navigate to="/login" />} /> */}
+            <Route
+              path="/users/:userId"
+              element={
+                <ProtectedRoute>
+                  <UserDetailsForm />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="*" element={<Navigate to="/login" />} />
           </Routes>
         </Box>
       </CartProvider>

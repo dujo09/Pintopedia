@@ -61,7 +61,9 @@ export default function ManufacturerList() {
       enableSort: false,
       renderField: (websiteLink, manufacturerId) => {
         return (
-          <a target='_blank' rel='noopener noreferrer' href={websiteLink}>{websiteLink}</a>
+          <a target="_blank" rel="noopener noreferrer" href={websiteLink}>
+            {websiteLink}
+          </a>
         );
       },
     },
@@ -100,10 +102,14 @@ export default function ManufacturerList() {
     if (!selectedItem) return;
 
     try {
-      const deleteCount = await manufacturerService.deleteManufacturerById(selectedItem.id);
+      const deleteCount = await manufacturerService.deleteManufacturerById(
+        selectedItem.id,
+      );
       if (deleteCount !== 1) return;
 
-      const index = manufacturers.findIndex((item) => item.id === selectedItem.id);
+      const index = manufacturers.findIndex(
+        (item) => item.id === selectedItem.id,
+      );
       if (index !== -1) {
         const updatedManufacturers = [
           ...manufacturers.slice(0, index),

@@ -4,6 +4,18 @@ const UserSchema = new Schema({
   username: {
     type: String,
   },
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
   passwordHash: {
     type: String,
   },

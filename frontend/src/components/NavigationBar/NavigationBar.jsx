@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Drawer } from "@mui/material";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
@@ -21,8 +21,9 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 export default function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { logout } = useAuth();
+  const { logout, userSession } = useAuth();
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -209,6 +210,15 @@ export default function NavigationBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
+                <MenuItem
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    navigate(`users/${userSession.id}`);
+                  }}
+                >
+                  <Typography sx={{ textAlign: "center" }}>Profil</Typography>
+                </MenuItem>
+
                 <MenuItem
                   onClick={() => {
                     handleCloseUserMenu();

@@ -35,6 +35,7 @@ export default function Login({}) {
         username: response.data.username,
         token: response.data.token,
         role: response.data.role,
+        id: response.data.id,
       };
 
       await login(userSession);

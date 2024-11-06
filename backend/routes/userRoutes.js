@@ -6,6 +6,13 @@ import authenticateToken from "../middlewares/authenticateTokenMiddleware.js";
 
 const userRouter = express.Router();
 
+userRouter.get(
+  "/:userId",
+  authenticateToken,
+  validateDataMiddleware(usersSchemas.getUserById),
+  userController.getUserById,
+);
+
 userRouter.post(
   "/login",
   validateDataMiddleware(usersSchemas.login),
@@ -17,6 +24,13 @@ userRouter.put(
   authenticateToken,
   validateDataMiddleware(usersSchemas.likeBeerById),
   userController.likeBeerById,
+);
+
+userRouter.put(
+  "/:userId",
+  authenticateToken,
+  validateDataMiddleware(usersSchemas.updateUserById),
+  userController.updateUserById,
 );
 
 export default userRouter;

@@ -2,6 +2,10 @@
   {
     "_id": "671fac4959b96c3753a2c74c",
     "username": "devAdmin",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "country": "Croatia",
     "passwordHash": "$2a$12$qvAc.01TyzRzsTFJZSxwmec8E4GV55d4aZcNL6UK6cBn3qsWJN8U2",
     "role": "admin",
     "likedBeers": ["6710ebcab40f1eccdfaba263"]
@@ -9,6 +13,10 @@
   {
     "_id": "671fac4959b96c3753a2c74d",
     "username": "devUser",
+    "firstName": "Mark",
+    "lastName": "Roark",
+    "email": "mark.roark@example.com",
+    "country": "USA",
     "passwordHash": "$2a$12$JX/1hiVZ/Z4l41d6bnFk2OImVoL2ypK37myt22JrywNDkZniL/w4m",
     "role": "user",
     "likedBeers": []

@@ -2,6 +2,40 @@ import userService from "../services/userService.js";
 import createToken from "../utility/createToken.js";
 import bcrypt from "bcrypt";
 
+const getUserById = async function (req, res) {
+  const userId = req.params.userId;
+  try {
+    const user = await userService.getUserByIdDb(userId);
+    if (!user) return res.status(404).json({ message: "Error User not found" });
+
+    return res.status(200).json(user);
+  } catch (err) {
+    console.log("Error getting User: ", err.message);
+    return res.status(500).json({ message: "Error getting User" });
+  }
+};
+
+const updateUserById = async function (req, res) {
+  const userId = req.params.userId;
+  const userData = req.body;
+  const userIdFromToken = res.locals.user.id;
+  const userRole = res.locals.user.role;
+  try {
+    if (userRole !== "admin" || userId !== userIdFromToken)
+      return res
+        .status(403)
+        .json({ message: "Error User doesn't have permission" });
+
+    const user = await userService.updateUserByIdDb(userId, userData);
+    if (!user) return res.status(404).json({ message: "Error User not found" });
+
+    return res.status(200).json(user);
+  } catch (err) {
+    console.log("Error updating User: ", err.message);
+    return res.status(500).json({ message: "Error updating User" });
+  }
+};
+
 const login = async function (req, res) {
   const username = req.body.username;
   const password = req.body.password;
@@ -22,7 +56,9 @@ const login = async function (req, res) {
       role: user.role,
     };
     const token = createToken(tokenPayload);
-    return res.status(200).json({ token, username, role: user.role });
+    return res
+      .status(200)
+      .json({ token, username, role: user.role, id: user._id });
   } catch (err) {
     console.log("Error during user login: ", err);
     return res.status(500).json({ message: "Error during user login" });
@@ -43,6 +79,8 @@ const likeBeerById = async function (req, res) {
 };
 
 export default {
+  getUserById,
   login,
   likeBeerById,
+  updateUserById,
 };
