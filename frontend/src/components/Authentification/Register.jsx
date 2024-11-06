@@ -48,7 +48,6 @@ export default function Register({}) {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
-        backgroundColor: "#f5f5f5",
       }}
     >
       <Paper

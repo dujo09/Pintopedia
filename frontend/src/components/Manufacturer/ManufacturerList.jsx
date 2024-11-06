@@ -47,17 +47,10 @@ export default function ManufacturerList() {
       enableSort: true,
     },
     {
-      id: "yearEstablished",
-      numeric: true,
-      label: "Godina osnutka",
-      disablePadding: false,
-      enableSort: true,
-    },
-    {
       id: "website",
       label: "Web stranica",
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       enableSort: false,
       renderField: (websiteLink, manufacturerId) => {
         return (
@@ -66,6 +59,13 @@ export default function ManufacturerList() {
           </a>
         );
       },
+    },
+    {
+      id: "yearEstablished",
+      numeric: true,
+      label: "Godina osnutka",
+      disablePadding: false,
+      enableSort: true,
     },
   ];
 

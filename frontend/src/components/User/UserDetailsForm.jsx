@@ -2,7 +2,7 @@ import { useTheme } from "@emotion/react";
 import { Box, Button, Divider, Grid2, Typography } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import yellowImage from "../../static/images/Solid_yellow.jpg";
+import yellowImage from "../../static/images/user.webp";
 import UserDetails from "./UserDetails";
 import userService from "./UserService";
 import UserForm from "./UserForm";
@@ -121,7 +121,6 @@ export default function UserDetailsForm() {
               width: "auto",
               height: "auto",
             }}
-            alt=""
             src={yellowImage}
           />
         </Grid2>
