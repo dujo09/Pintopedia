@@ -15,6 +15,7 @@ import ManufacturerList from "./components/Manufacturer/ManufacturerList";
 import ManufacturerDetailsForm from "./components/Manufacturer/ManufacturerDetailsForm";
 import UserDetails from "./components/User/UserDetails";
 import UserDetailsForm from "./components/User/UserDetailsForm";
+import Register from "./components/Authentification/Register";
 
 export const darkTheme = createTheme({
   palette: {
@@ -155,6 +156,7 @@ function App() {
 
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
             <Route
               path="/beers"

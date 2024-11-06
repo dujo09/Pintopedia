@@ -21,11 +21,6 @@ const updateUserById = async function (req, res) {
   const userIdFromToken = res.locals.user.id;
   const userRole = res.locals.user.role;
   try {
-    if (userRole !== "admin" || userId !== userIdFromToken)
-      return res
-        .status(403)
-        .json({ message: "Error User doesn't have permission" });
-
     const user = await userService.updateUserByIdDb(userId, userData);
     if (!user) return res.status(404).json({ message: "Error User not found" });
 
@@ -65,6 +60,38 @@ const login = async function (req, res) {
   }
 };
 
+const register = async function (req, res) {
+  const username = req.body.username;
+  const password = req.body.password;
+  try {
+    const user = await userService.getUserByUsernameDb(username);
+    if (user)
+      return res
+        .status(409)
+        .json({ message: "Error user already defined in database" });
+
+
+    const saltRounds = 10;
+    const passwordHash = await bcrypt.hash(password, saltRounds);
+
+    const newUser = await userService.createUserDb({username, passwordHash, role: "user"});
+    
+    const tokenPayload = {
+      id: newUser._id,
+      username: newUser.username,
+      role: newUser.role,
+    };
+    const token = createToken(tokenPayload);
+    
+    return res
+      .status(200)
+      .json({ token, username, role: newUser.role, id: newUser._id });
+  } catch (err) {
+    console.log("Error during user registration: ", err);
+    return res.status(500).json({ message: "Error during user registration" });
+  }
+}
+
 const likeBeerById = async function (req, res) {
   const userId = res.locals.user.id;
   const beerId = req.params.id;
@@ -81,6 +108,7 @@ const likeBeerById = async function (req, res) {
 export default {
   getUserById,
   login,
+  register,
   likeBeerById,
   updateUserById,
 };

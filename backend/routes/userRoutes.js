@@ -18,6 +18,11 @@ userRouter.post(
   validateDataMiddleware(usersSchemas.login),
   userController.login,
 );
+userRouter.post(
+  "/register",
+  validateDataMiddleware(usersSchemas.register),
+  userController.register,
+);
 
 userRouter.put(
   "/like-beer/:id",

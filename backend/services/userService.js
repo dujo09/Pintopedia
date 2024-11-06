@@ -14,7 +14,6 @@ const getUserByIdDb = async function (userId) {
 };
 
 const updateUserByIdDb = async function (userId, userData) {
-  console.log(userData);
   const { username, firstName, lastName, email, country } = userData;
 
   try {
@@ -40,6 +39,19 @@ const updateUserByIdDb = async function (userId, userData) {
     if (!updatedUser) return null;
 
     return updatedUser;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
+const createUserDb = async function (userData) {
+  const { username, passwordHash, role } =
+    userData;
+
+  try {
+    const user = await User.create({
+      username, passwordHash, role    });
+    return user;
   } catch (err) {
     throw new Error(err.message);
   }
@@ -78,4 +90,5 @@ export default {
   getUserByUsernameDb,
   likeBeerByIdDb,
   updateUserByIdDb,
+  createUserDb
 };
