@@ -53,7 +53,6 @@ export default function NavigationBar() {
       <AppBar position="static">
         <Container maxWidth={false}>
           <Toolbar disableGutters>
-            {/* <img height={25} style={{ marginRight: "25px" }} alt="fesb logo" src={FesbLogo} /> */}
             <Typography
               variant="h6"
               noWrap
@@ -164,15 +163,6 @@ export default function NavigationBar() {
                 to="/manufacturers"
               >
                 Proizvođači
-              </Button>
-
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-                component={Link}
-                to="/users"
-              >
-                Korisnici
               </Button>
             </Box>
 

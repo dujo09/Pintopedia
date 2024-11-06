@@ -70,19 +70,22 @@ const register = async function (req, res) {
         .status(409)
         .json({ message: "Error user already defined in database" });
 
-
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
 
-    const newUser = await userService.createUserDb({username, passwordHash, role: "user"});
-    
+    const newUser = await userService.createUserDb({
+      username,
+      passwordHash,
+      role: "user",
+    });
+
     const tokenPayload = {
       id: newUser._id,
       username: newUser.username,
       role: newUser.role,
     };
     const token = createToken(tokenPayload);
-    
+
     return res
       .status(200)
       .json({ token, username, role: newUser.role, id: newUser._id });
@@ -90,7 +93,7 @@ const register = async function (req, res) {
     console.log("Error during user registration: ", err);
     return res.status(500).json({ message: "Error during user registration" });
   }
-}
+};
 
 const likeBeerById = async function (req, res) {
   const userId = res.locals.user.id;
