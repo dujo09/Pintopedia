@@ -34,6 +34,10 @@ export const CartProvider = ({ children }) => {
     });
   };
 
+  const removeAllItems = () => {
+    setCartItems([]);
+  };
+
   const removeItem = (beerId) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== beerId));
   };
@@ -44,6 +48,7 @@ export const CartProvider = ({ children }) => {
       addItemQuantity,
       removeItemQuantity,
       removeItem,
+      removeAllItems,
     }),
     [cartItems],
   );

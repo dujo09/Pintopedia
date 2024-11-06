@@ -10,6 +10,7 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import {
+  Button,
   Divider,
   FilledInput,
   Grid2,
@@ -23,7 +24,8 @@ import { useCart } from "../../hooks/useCart";
 import ShoppingCartItem from "./ShoppingCartItem";
 
 export default function ShoppingCart() {
-  const { cartItems, addItemQuantity, removeItemQuantity } = useCart();
+  const { cartItems, addItemQuantity, removeItemQuantity, removeAllItems } =
+    useCart();
   const theme = useTheme();
 
   return (
@@ -79,6 +81,15 @@ export default function ShoppingCart() {
             removeQuantity={() => removeItemQuantity(cartItem.id)}
           />
         ))}
+
+        <Button
+          sx={{ marginY: 5 }}
+          fullWidth
+          variant="outlined"
+          onClick={() => removeAllItems()}
+        >
+          Isprazni košaricu
+        </Button>
       </Box>
     </Box>
   );
