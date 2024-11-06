@@ -69,7 +69,7 @@ const createManufacturer = async function (req, res) {
 };
 
 const deleteManufacturerById = async function (req, res) {
-  const id = req.params.id;
+  const manufacturerId = req.params.manufacturerId;
   const userRole = res.locals.user.role;
   try {
     if (userRole !== "admin")
@@ -77,7 +77,7 @@ const deleteManufacturerById = async function (req, res) {
         .status(403)
         .json({ message: "Error User doesn't have permission" });
 
-    const deletedCount = await manufacturerService.deleteManufacturerByIdDb(id);
+    const deletedCount = await manufacturerService.deleteManufacturerByIdDb(manufacturerId);
     if (!deletedCount)
       return res.status(404).json({ message: "Error Manufacturer not found" });
 

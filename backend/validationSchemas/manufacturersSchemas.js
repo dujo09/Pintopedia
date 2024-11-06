@@ -35,7 +35,7 @@ const createManufacturer = Joi.object({
 
 const deleteManufacturerById = Joi.object({
   params: Joi.object({
-    id: Joi.string().required(),
+    manufacturerId: Joi.string().required(),
   }),
   body: Joi.object(),
 });

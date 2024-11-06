@@ -43,9 +43,19 @@ const createManufacturer = async function (manufacturerData) {
   return response.data;
 };
 
+const deleteManufacturerById = async function (manufacturerId) {
+  const response = await axios.delete(`manufacturers/${manufacturerId}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response.data;
+};
+
 export default {
   getAllManufacturers,
   getManufacturerById,
   updateManufacturerById,
   createManufacturer,
+  deleteManufacturerById,
 };

@@ -9,7 +9,7 @@ import {
   Rating,
   Typography,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -53,13 +53,18 @@ export default function ManufacturerList() {
       disablePadding: false,
       enableSort: true,
     },
-    // {
-    //   id: "website",
-    //   numeric: true,
-    //   label: "Web stranica",
-    //   disablePadding: false,
-    //   enableSort: true,
-    // },
+    {
+      id: "website",
+      label: "Web stranica",
+      numeric: false,
+      disablePadding: true,
+      enableSort: false,
+      renderField: (websiteLink, manufacturerId) => {
+        return (
+          <a target='_blank' rel='noopener noreferrer' href={websiteLink}>{websiteLink}</a>
+        );
+      },
+    },
   ];
 
   useEffect(() => {
@@ -91,26 +96,26 @@ export default function ManufacturerList() {
     navigate(`/manufacturers/${selectedItem.id}`);
   };
 
-  // const handleClickDelete = async () => {
-  //   if (!selectedItem) return;
+  const handleClickDelete = async () => {
+    if (!selectedItem) return;
 
-  //   try {
-  //     const deleteCount = await beerService.deleteBeerById(selectedItem.id);
-  //     if (deleteCount !== 1) return;
+    try {
+      const deleteCount = await manufacturerService.deleteManufacturerById(selectedItem.id);
+      if (deleteCount !== 1) return;
 
-  //     const index = beers.findIndex((item) => item.id === selectedItem.id);
-  //     if (index !== -1) {
-  //       const updatedBeers = [
-  //         ...beers.slice(0, index),
-  //         ...beers.slice(index + 1),
-  //       ];
-  //       setBeers(updatedBeers);
-  //       setSelectedItem(null);
-  //     }
-  //   } catch (err) {
-  //     console.log("Error deleting beer: ", err);
-  //   }
-  // };
+      const index = manufacturers.findIndex((item) => item.id === selectedItem.id);
+      if (index !== -1) {
+        const updatedManufacturers = [
+          ...manufacturers.slice(0, index),
+          ...manufacturers.slice(index + 1),
+        ];
+        setManufacturers(updatedManufacturers);
+        setSelectedItem(null);
+      }
+    } catch (err) {
+      console.log("Error deleting manufacturer: ", err);
+    }
+  };
 
   return (
     <Box
@@ -161,7 +166,7 @@ export default function ManufacturerList() {
             variant="contained"
             sx={{ marginLeft: ".25rem" }}
             color="error"
-            // onClick={handleClickDelete}
+            onClick={handleClickDelete}
             disabled={userSession.role !== "admin" || !selectedItem}
           >
             Ukloni

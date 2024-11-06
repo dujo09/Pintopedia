@@ -77,11 +77,16 @@ const createManufacturerDb = async function (manufacturerData) {
   }
 };
 
-const deleteManufacturerByIdDb = async function (id) {
-  if (!ObjectId.isValid(id)) return null;
+const deleteManufacturerByIdDb = async function (manufacturerId) {
+  try {
+    if (!ObjectId.isValid(manufacturerId))
+      throw new Error("manufacturerId not valid ObjectId type");
 
-  const result = await Manufacturer.deleteOne({ _id: id });
-  return result.deletedCount;
+    const result = await Manufacturer.deleteOne({ _id: manufacturerId });
+    return result.deletedCount;
+  } catch (err) {
+    throw new Error(err.message);
+  }
 };
 
 export default {
