@@ -17,12 +17,13 @@ import { useAuth } from "../../hooks/useAuth";
 import { Drawer } from "@mui/material";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import ShoppingCartDrawer from "../ShoppingCart/ShoppingCartNew";
 
 export default function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { logout, userSession } = useAuth();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
@@ -45,12 +46,12 @@ export default function NavigationBar() {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "row", flex: "0, 0, auto" }}>
-      <Drawer anchor={"right"} open={open} onClose={toggleDrawer(false)}>
-        <ShoppingCart />
-      </Drawer>
+    <>
+      <ShoppingCartDrawer isOpen={open} />
 
-      <AppBar position="static">
+    <Box sx={{ display: "flex", flexDirection: "row", flex: "0, 0, auto" }}>
+
+      <AppBar sx={{zIndex: "1"}} position="static">
         <Container maxWidth={false}>
           <Toolbar disableGutters>
             <Typography
@@ -170,7 +171,7 @@ export default function NavigationBar() {
               <Tooltip title="Košarica">
                 <IconButton
                   variant="contained"
-                  onClick={toggleDrawer(true)}
+                  onClick={toggleDrawer(!open)}
                   sx={{ p: 0 }}
                 >
                   <ShoppingCartIcon />
@@ -225,5 +226,6 @@ export default function NavigationBar() {
         </Container>
       </AppBar>
     </Box>
+    </>
   );
 }
