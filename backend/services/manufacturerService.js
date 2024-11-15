@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import Manufacturer from "../models/Manufacturer.js";
+import Beer from "../models/Beer.js";
 
 const getAllManufacturersDb = async function () {
   try {
@@ -81,6 +82,11 @@ const deleteManufacturerByIdDb = async function (manufacturerId) {
   try {
     if (!ObjectId.isValid(manufacturerId))
       throw new Error("manufacturerId not valid ObjectId type");
+
+    const connectedBeers = await Beer.find({ manufacturer: manufacturerId });
+    if (connectedBeers.length !== 0) {
+      throw new Error("beers connected to this manufacturer");
+    }
 
     const result = await Manufacturer.deleteOne({ _id: manufacturerId });
     return result.deletedCount;

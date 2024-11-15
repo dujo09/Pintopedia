@@ -15,7 +15,7 @@ const updateBeerById = Joi.object({
     name: Joi.string().required(),
     alcoholPercentage: Joi.number().required(),
     color: Joi.string().required(),
-    averagePrice: Joi.string().required(),
+    averagePrice: Joi.number().required(),
     flavorDescription: Joi.string().required(),
     manufacturer: Joi.string().required(),
   }),

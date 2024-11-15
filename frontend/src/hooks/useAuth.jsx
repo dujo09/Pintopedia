@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useMemo, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
+import { clearAxiosInterceptors } from "../axios/axiosSetup";
+import axios from "axios";
 
 const AuthContext = createContext(undefined);
 
@@ -15,6 +17,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    clearAxiosInterceptors();
     setUserSession(null);
     navigate("/login", { replace: true });
   };

@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import "./axios/axiosSetup";
 import BeerList from "./components/Beer/BeerList";
 import { Box, Container, createTheme, CssBaseline } from "@mui/material";
@@ -132,11 +132,10 @@ export const darkTheme = createTheme({
 
 function App() {
   const { userSession, logout } = useAuth();
+  const location = useLocation();
 
   useEffect(() => {
-    if (userSession) {
-      setupAxiosInterceptors(() => userSession?.token || null, logout);
-    }
+    setupAxiosInterceptors(() => userSession?.token || null, logout);
   }, [userSession, logout]);
 
   return (
@@ -152,7 +151,8 @@ function App() {
             flexDirection: "column",
           }}
         >
-          <NavigationBar />
+          {location.pathname !== "/login" &&
+            location.pathname !== "/register" && <NavigationBar />}
 
           <Routes>
             <Route path="/login" element={<Login />} />

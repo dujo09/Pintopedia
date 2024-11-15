@@ -4,11 +4,13 @@ const authenticateToken = async function (req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1]; // Assumes "Bearer TOKEN"
 
-  console.log("Recieved TOKEN: " + token);
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       console.log("Recieved TOKEN invalid: " + token);
       console.log("Error: " + err);
+    } else {
+      console.log("Recieved TOKEN valid: " + token);
+      console.log("username: " + decoded.username);
     }
   });
 
