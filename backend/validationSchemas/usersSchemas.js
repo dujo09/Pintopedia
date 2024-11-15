@@ -18,6 +18,16 @@ const updateUserById = Joi.object({
   }),
 });
 
+const updateUserPasswordById = Joi.object({
+  params: Joi.object({
+    userId: Joi.string().required(),
+  }),
+  body: Joi.object({
+    currentPassword: Joi.string().required(),
+    newPassword: Joi.string().required(),
+  }),
+});
+
 const login = Joi.object({
   params: Joi.object(),
   body: Joi.object({
@@ -43,4 +53,4 @@ const likeBeerById = Joi.object({
   }),
 });
 
-export default { getUserById, login, register, likeBeerById, updateUserById };
+export default { getUserById, login, register, likeBeerById, updateUserById, updateUserPasswordById };

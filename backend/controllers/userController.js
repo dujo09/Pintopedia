@@ -2,6 +2,23 @@ import userService from "../services/userService.js";
 import createToken from "../utility/createToken.js";
 import bcrypt from "bcrypt";
 
+const getAllUsers = async function (req, res) {
+  const userRole = res.locals.user.role;
+  
+  try {
+    if (userRole !== "admin")
+      return res
+        .status(403)
+        .json({ message: "Error User doesn't have permission" });
+    
+    const users = await userService.getAllUsersDb();
+    return res.status(200).json(users);
+  } catch (err) {
+    console.log("Error getting all Users: ", err);
+    return res.status(500).json({ message: "Error getting all Users" });
+  }
+};
+
 const getUserById = async function (req, res) {
   const userId = req.params.userId;
   try {
@@ -21,6 +38,11 @@ const updateUserById = async function (req, res) {
   const userIdFromToken = res.locals.user.id;
   const userRole = res.locals.user.role;
   try {
+    if (userRole !== "admin"  && userIdFromToken !== userId)
+      return res
+        .status(403)
+        .json({ message: "Error User doesn't have permission" });
+    
     const user = await userService.updateUserByIdDb(userId, userData);
     if (!user) return res.status(404).json({ message: "Error User not found" });
 
@@ -108,10 +130,44 @@ const likeBeerById = async function (req, res) {
   }
 };
 
+const updateUserPasswordById = async function (req, res) {
+  const userId = req.params.userId;
+  const currentPassword = req.body.currentPassword;
+  const newPassword = req.body.newPassword;
+
+  const userRole = res.locals.user.role;
+  try {
+    if (userRole !== "admin"  && userIdFromToken !== userId)
+      return res
+        .status(403)
+        .json({ message: "Error User doesn't have permission" });
+    
+    const user = await userService.getUserByIdDb(userId);
+    if (!user) return res.status(404).json({ message: "Error User not found" });
+
+    const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+    if (!isPasswordValid)
+      return res.status(403).json({ message: "Error incorrect password" });
+
+    const saltRounds = 10;
+    const passwordHash = await bcrypt.hash(password, saltRounds);
+
+    const updatedUser = userService.updateUserPasswordByIdDb(userId, passwordHash);
+    if (!updatedUser) return res.status(500).json({ message: "Error updating User password" });
+
+    return res.status(200).json(updatedUser);
+  } catch (err) {
+    console.log("Error updating User password: ", err.message);
+    return res.status(500).json({ message: "Error updating User password" });
+  }
+};
+
 export default {
   getUserById,
   login,
   register,
   likeBeerById,
   updateUserById,
+  getAllUsers,
+  updateUserPasswordById
 };

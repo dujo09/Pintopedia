@@ -7,6 +7,12 @@ import authenticateToken from "../middlewares/authenticateTokenMiddleware.js";
 const userRouter = express.Router();
 
 userRouter.get(
+  "/",
+  authenticateToken,
+  userController.getAllUsers,
+);
+
+userRouter.get(
   "/:userId",
   authenticateToken,
   validateDataMiddleware(usersSchemas.getUserById),
@@ -32,10 +38,20 @@ userRouter.put(
 );
 
 userRouter.put(
+  "/:userId/update-password",
+  authenticateToken,
+  validateDataMiddleware(usersSchemas.updateUserPasswordById),
+  userController.updateUserById,
+);
+
+userRouter.put(
   "/:userId",
   authenticateToken,
   validateDataMiddleware(usersSchemas.updateUserById),
   userController.updateUserById,
 );
+
+
+
 
 export default userRouter;

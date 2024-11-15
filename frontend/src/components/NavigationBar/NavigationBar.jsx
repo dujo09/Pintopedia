@@ -164,6 +164,17 @@ export default function NavigationBar() {
               >
                 Proizvođači
               </Button>
+
+              {userSession.role === "admin" && 
+        (      <Button
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: "white", display: "block" }}
+              component={Link}
+              to="/users"
+            >
+              Korisnici
+            </Button>)
+              }
             </Box>
 
             <Box sx={{ flexGrow: 0, marginRight: 3 }}>

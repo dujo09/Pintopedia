@@ -16,6 +16,8 @@ import ManufacturerDetailsForm from "./components/Manufacturer/ManufacturerDetai
 import UserDetails from "./components/User/UserDetails";
 import UserDetailsForm from "./components/User/UserDetailsForm";
 import Register from "./components/Authentification/Register";
+import UserList from "./components/User/UserList";
+import ChangePasswordForm from "./components/User/ChangePasswordForm";
 
 export const darkTheme = createTheme({
   palette: {
@@ -211,6 +213,14 @@ function App() {
             />
 
             <Route
+              path="/users"
+              element={
+                <ProtectedRoute>
+                  <UserList />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/users/:userId"
               element={
                 <ProtectedRoute>
@@ -218,6 +228,15 @@ function App() {
                 </ProtectedRoute>
               }
             />
+           <Route
+              path="/users/change-password/:userId"
+              element={
+                <ProtectedRoute>
+                  <ChangePasswordForm />
+                </ProtectedRoute>
+              }
+            />
+
 
             <Route path="*" element={<Navigate to="/login" />} />
           </Routes>

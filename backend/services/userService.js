@@ -1,6 +1,15 @@
 import { ObjectId } from "mongodb";
 import User from "../models/User.js";
 
+const getAllUsersDb = async function () {
+  try {
+    const users = await User.find({});
+    return users;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
 const getUserByIdDb = async function (userId) {
   try {
     if (!ObjectId.isValid(userId))
@@ -29,6 +38,31 @@ const updateUserByIdDb = async function (userId, userData) {
           lastName,
           email,
           country,
+        },
+      },
+      {
+        new: true,
+      },
+    ).lean();
+
+    if (!updatedUser) return null;
+
+    return updatedUser;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
+const updateUserPasswordByIdDb = async function (userId, passwordHash) {
+  try {
+    if (!ObjectId.isValid(userId))
+      throw new Error("userId not valid ObjectId type");
+
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: new ObjectId(userId) },
+      {
+        $set: {
+          passwordHash
         },
       },
       {
@@ -93,4 +127,6 @@ export default {
   likeBeerByIdDb,
   updateUserByIdDb,
   createUserDb,
+  getAllUsersDb,
+  updateUserPasswordByIdDb
 };
